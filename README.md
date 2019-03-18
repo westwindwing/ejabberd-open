@@ -324,9 +324,6 @@ $ make install
 $ cp ejabberd.yml.qunar /startalk/ejabberd/etc/ejabberd/ejabberd.yml
 $ cp ejabberdctl.cfg.qunar /startalk/ejabberd/etc/ejabberd/ejabberdctl.cfg
 
-ejabberd配置
-参考 https://github.com/qunarcorp/ejabberd-open/blob/master/doc/setting.md
-
 启动ejabberd
 
 $ cd /startalk/ejabberd
