@@ -268,3 +268,23 @@ maType说明参考[matype说明](matype.md)
     "errmsg":"success"
 }
 ```
+
+## 11.清理离职人员所在的群
+
+```
+接口：qtalk/clear_staff
+请求方式：POST
+参数：
+{
+    "users":["test", "test1"],
+    "host":"qtalk.test.org"
+}
+
+返回值：
+{
+    "ret":true,
+    "errcode":0,
+    "errmsg":"",
+    "data":""
+}
+```
