@@ -45,5 +45,7 @@ handle_process([<<"get_user_nick">>], Req) ->
     http_get_user_nick:handle(Req);
 handle_process([<<"send_message">>], Req) ->
     http_send_message:handle(Req);
+handle_process([<<"clear_staff">>], Req) ->
+    http_clear_staff:handle(Req);
 handle_process(_, Req) ->
-    http_utils:cowboy_req_reply_json(http_utils:gen_fail_result(1, <<"request not defined">>), Req).
+http_utils:cowboy_req_reply_json(http_utils:gen_fail_result(1, <<"request not defined">>), Req).
