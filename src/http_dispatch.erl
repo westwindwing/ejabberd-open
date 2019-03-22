@@ -1,12 +1,16 @@
 -module(http_dispatch).
 
--export([init/2]).
+-export([init/3]).
+-export([handle/2]).
 -export([terminate/3]).
 -include("ejabberd.hrl").
 -include("logger.hrl").
 
-init(Req, State) ->
-    Path = cowboy_req:path_info(Req),
+init(_Transport, Req, []) ->
+    {ok, Req, undefined}.
+
+handle(Req, State) ->
+    {Path, _} = cowboy_req:path_info(Req),
     {ok, Req1} = handle_process(Path, Req),
     {ok, Req1, State}.
 
@@ -44,4 +48,4 @@ handle_process([<<"send_message">>], Req) ->
 handle_process([<<"clear_staff">>], Req) ->
     http_clear_staff:handle(Req);
 handle_process(_, Req) ->
-    http_utils:cowboy_req_reply_json(http_utils:gen_fail_result(1, <<"request not defined">>), Req).
+http_utils:cowboy_req_reply_json(http_utils:gen_fail_result(1, <<"request not defined">>), Req).
