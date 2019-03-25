@@ -4294,25 +4294,6 @@ ALTER TABLE ONLY public.host_info
 ALTER TABLE ONLY public.host_users
     ADD CONSTRAINT host_users_pkey PRIMARY KEY (id);
 
-
---
--- TOC entry 4150 (class 2606 OID 18233)
--- Name: host_users_test host_users_test_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.host_users_test
-    ADD CONSTRAINT host_users_test_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4152 (class 2606 OID 18235)
--- Name: host_users_test host_users_test_user_id_host_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.host_users_test
-    ADD CONSTRAINT host_users_test_user_id_host_id_key UNIQUE (user_id, host_id);
-
-
 --
 -- TOC entry 4142 (class 2606 OID 18237)
 -- Name: host_users host_users_user_id_host_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
@@ -5183,55 +5164,6 @@ CREATE INDEX host_users_hire_flag_user_name_idx ON public.host_users USING btree
 --
 
 CREATE INDEX host_users_host_id_idx ON public.host_users USING btree (host_id);
-
-
---
--- TOC entry 4147 (class 1259 OID 18408)
--- Name: host_users_test_hire_flag_user_name_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX host_users_test_hire_flag_user_name_idx ON public.host_users_test USING btree (hire_flag, user_name);
-
-
---
--- TOC entry 4148 (class 1259 OID 18409)
--- Name: host_users_test_host_id_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX host_users_test_host_id_idx ON public.host_users_test USING btree (host_id);
-
-
---
--- TOC entry 4153 (class 1259 OID 18410)
--- Name: host_users_test_user_id_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX host_users_test_user_id_idx ON public.host_users_test USING btree (user_id);
-
-
---
--- TOC entry 4154 (class 1259 OID 18411)
--- Name: host_users_test_user_id_user_name_pinyin_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX host_users_test_user_id_user_name_pinyin_idx ON public.host_users_test USING gin (user_id public.gin_trgm_ops, user_name public.gin_trgm_ops, pinyin public.gin_trgm_ops) WHERE (hire_flag = 1);
-
-
---
--- TOC entry 4155 (class 1259 OID 18412)
--- Name: host_users_test_user_name_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX host_users_test_user_name_idx ON public.host_users_test USING btree (user_name);
-
-
---
--- TOC entry 4156 (class 1259 OID 18413)
--- Name: host_users_test_version_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX host_users_test_version_idx ON public.host_users_test USING btree (version);
-
 
 --
 -- TOC entry 4143 (class 1259 OID 18414)
@@ -9011,25 +8943,6 @@ REVOKE ALL ON TABLE public.host_users FROM postgres;
 --
 
 REVOKE ALL ON SEQUENCE public.host_users_id_seq FROM postgres;
-
-
---
--- TOC entry 4915 (class 0 OID 0)
--- Dependencies: 227
--- Name: SEQUENCE host_users_test_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON SEQUENCE public.host_users_test_id_seq FROM postgres;
-
-
---
--- TOC entry 4916 (class 0 OID 0)
--- Dependencies: 228
--- Name: TABLE host_users_test; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.host_users_test FROM postgres;
-
 
 --
 -- TOC entry 4936 (class 0 OID 0)
