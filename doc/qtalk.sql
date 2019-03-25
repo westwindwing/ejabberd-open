@@ -178,18 +178,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 202 (class 1259 OID 17226)
--- Name: a; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.a (
-    id bigint
-);
-
-
-ALTER TABLE public.a OWNER TO postgres;
-
---
 -- TOC entry 203 (class 1259 OID 17229)
 -- Name: admin_user; Type: TABLE; Schema: public; Owner: ejabberd
 --
@@ -242,19 +230,6 @@ ALTER TABLE public.android_send_stat_id_seq OWNER TO ejabberd;
 --
 
 ALTER SEQUENCE public.android_send_stat_id_seq OWNED BY public.android_send_stat.id;
-
-
---
--- TOC entry 206 (class 1259 OID 17246)
--- Name: b; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.b (
-    id bigint
-);
-
-
-ALTER TABLE public.b OWNER TO postgres;
 
 --
 -- TOC entry 207 (class 1259 OID 17249)
@@ -8871,25 +8846,6 @@ REVOKE ALL ON FUNCTION public.word_similarity_dist_op(text, text) FROM postgres;
 --
 
 REVOKE ALL ON FUNCTION public.word_similarity_op(text, text) FROM postgres;
-
-
---
--- TOC entry 4873 (class 0 OID 0)
--- Dependencies: 202
--- Name: TABLE a; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.a FROM postgres;
-
-
---
--- TOC entry 4875 (class 0 OID 0)
--- Dependencies: 206
--- Name: TABLE b; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.b FROM postgres;
-
 
 --
 -- TOC entry 4905 (class 0 OID 0)
