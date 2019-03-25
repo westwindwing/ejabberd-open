@@ -1707,7 +1707,7 @@ CREATE TABLE public.muc_vcard_info (
     show_name text NOT NULL,
     muc_desc text,
     muc_title text,
-    muc_pic text,
+    muc_pic text DEFAULT '/file/v2/download/eb574c5a1d33c72ba14fc1616cde3a42.png'::text,
     version integer DEFAULT 1
 );
 
@@ -3718,7 +3718,7 @@ ALTER TABLE public.vcard_search OWNER TO ejabberd;
 CREATE TABLE public.vcard_version (
     username text NOT NULL,
     version integer DEFAULT 1,
-    url text,
+    url text DEFAULT '/file/v2/download/8c9d42532be9316e2202ffef8fcfeba5.png'::text,
     uin character varying(30),
     id bigint NOT NULL,
     profile_version smallint DEFAULT (1)::smallint,
