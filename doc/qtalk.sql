@@ -1590,47 +1590,6 @@ CREATE TABLE public.muc_room_users_backup (
 
 ALTER TABLE public.muc_room_users_backup OWNER TO ejabberd;
 
---
--- TOC entry 264 (class 1259 OID 17603)
--- Name: muc_spool; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.muc_spool (
-    username text NOT NULL,
-    xml text NOT NULL,
-    seq integer NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL,
-    send_flag text DEFAULT '1'::text,
-    from_username text DEFAULT '未知'::text NOT NULL,
-    nick text
-);
-
-
-ALTER TABLE public.muc_spool OWNER TO ejabberd;
-
---
--- TOC entry 265 (class 1259 OID 17612)
--- Name: muc_spool_seq_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.muc_spool_seq_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.muc_spool_seq_seq OWNER TO ejabberd;
-
---
--- TOC entry 4945 (class 0 OID 0)
--- Dependencies: 265
--- Name: muc_spool_seq_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.muc_spool_seq_seq OWNED BY public.muc_spool.seq;
-
 
 --
 -- TOC entry 266 (class 1259 OID 17614)
@@ -1913,26 +1872,6 @@ ALTER TABLE public.person_extent_id_seq OWNER TO ejabberd;
 --
 
 ALTER SEQUENCE public.person_extent_id_seq OWNED BY public.person_extent.id;
-
-
---
--- TOC entry 281 (class 1259 OID 17705)
--- Name: person_user_mac_key; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.person_user_mac_key (
-    user_name character varying(255) NOT NULL,
-    host character varying(255) NOT NULL,
-    mac_key character varying(255),
-    os text DEFAULT 'ios'::text NOT NULL,
-    version text,
-    push_flag integer DEFAULT 0 NOT NULL,
-    create_time timestamp with time zone DEFAULT now(),
-    update_at timestamp with time zone DEFAULT now()
-);
-
-
-ALTER TABLE public.person_user_mac_key OWNER TO ejabberd;
 
 --
 -- TOC entry 282 (class 1259 OID 17715)
@@ -3402,49 +3341,6 @@ CREATE TABLE public.sms_user_info (
 ALTER TABLE public.sms_user_info OWNER TO ejabberd;
 
 --
--- TOC entry 328 (class 1259 OID 17975)
--- Name: spool; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.spool (
-    username text NOT NULL,
-    xml text NOT NULL,
-    seq integer NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL,
-    send_flag text DEFAULT '1'::text,
-    from_username text DEFAULT '未知'::text NOT NULL,
-    notice_flag text DEFAULT '0'::text,
-    away_flag text DEFAULT '0'::text
-);
-
-
-ALTER TABLE public.spool OWNER TO ejabberd;
-
---
--- TOC entry 329 (class 1259 OID 17986)
--- Name: spool_seq_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.spool_seq_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.spool_seq_seq OWNER TO ejabberd;
-
---
--- TOC entry 5045 (class 0 OID 0)
--- Dependencies: 329
--- Name: spool_seq_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.spool_seq_seq OWNED BY public.spool.seq;
-
-
---
 -- TOC entry 330 (class 1259 OID 17988)
 -- Name: sr_group; Type: TABLE; Schema: public; Owner: ejabberd
 --
@@ -3471,34 +3367,6 @@ CREATE TABLE public.sr_user (
 
 
 ALTER TABLE public.sr_user OWNER TO ejabberd;
-
---
--- TOC entry 332 (class 1259 OID 18002)
--- Name: test1_table; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.test1_table (
-    userid text DEFAULT ''::text NOT NULL,
-    count1 integer,
-    count2 integer
-);
-
-
-ALTER TABLE public.test1_table OWNER TO ejabberd;
-
---
--- TOC entry 333 (class 1259 OID 18009)
--- Name: test_user; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.test_user (
-    id integer,
-    name text,
-    count integer
-);
-
-
-ALTER TABLE public.test_user OWNER TO ejabberd;
 
 --
 -- TOC entry 334 (class 1259 OID 18015)
@@ -3529,23 +3397,6 @@ CREATE TABLE public.user_friends (
 
 
 ALTER TABLE public.user_friends OWNER TO ejabberd;
-
---
--- TOC entry 336 (class 1259 OID 18029)
--- Name: user_mac_key; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.user_mac_key (
-    user_name character varying(255) NOT NULL,
-    host character varying(255) NOT NULL,
-    mac_key character varying(255),
-    os text DEFAULT 'ios'::text NOT NULL,
-    version text,
-    push_flag integer DEFAULT 0 NOT NULL
-);
-
-
-ALTER TABLE public.user_mac_key OWNER TO ejabberd;
 
 --
 -- TOC entry 337 (class 1259 OID 18037)
@@ -3870,35 +3721,6 @@ CREATE TABLE public.white_list (
 
 
 ALTER TABLE public.white_list OWNER TO ejabberd;
-
---
--- TOC entry 354 (class 1259 OID 18150)
--- Name: white_list_test; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.white_list_test (
-    username text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL,
-    single_flag text DEFAULT '1'::text
-);
-
-
-ALTER TABLE public.white_list_test OWNER TO postgres;
-
---
--- TOC entry 355 (class 1259 OID 18158)
--- Name: win_dump_url; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.win_dump_url (
-    user_name character varying(50) NOT NULL,
-    dump_url text NOT NULL,
-    dump_time timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.win_dump_url OWNER TO ejabberd;
-
 --
 -- TOC entry 3837 (class 2604 OID 18165)
 -- Name: android_send_stat id; Type: DEFAULT; Schema: public; Owner: ejabberd
@@ -3993,14 +3815,6 @@ ALTER TABLE ONLY public.msg_stat ALTER COLUMN id SET DEFAULT nextval('public.msg
 --
 
 ALTER TABLE ONLY public.muc_room_history ALTER COLUMN id SET DEFAULT nextval('public.muc_room_history_id_seq'::regclass);
-
-
---
--- TOC entry 3951 (class 2604 OID 18178)
--- Name: muc_spool seq; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.muc_spool ALTER COLUMN seq SET DEFAULT nextval('public.muc_spool_seq_seq'::regclass);
 
 
 --
@@ -4137,15 +3951,6 @@ ALTER TABLE ONLY public.sms_log_info ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.sms_request_info ALTER COLUMN id SET DEFAULT nextval('public.sms_request_info_id_seq'::regclass);
-
-
---
--- TOC entry 4043 (class 2604 OID 18196)
--- Name: spool seq; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.spool ALTER COLUMN seq SET DEFAULT nextval('public.spool_seq_seq'::regclass);
-
 
 --
 -- TOC entry 4020 (class 2604 OID 18197)
@@ -4385,16 +4190,6 @@ ALTER TABLE ONLY public.muc_room_history
 ALTER TABLE ONLY public.muc_room_users
     ADD CONSTRAINT muc_room_users_pkey PRIMARY KEY (id);
 
-
---
--- TOC entry 4279 (class 2606 OID 18263)
--- Name: muc_spool muc_spool_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.muc_spool
-    ADD CONSTRAINT muc_spool_pkey PRIMARY KEY (seq);
-
-
 --
 -- TOC entry 4284 (class 2606 OID 18265)
 -- Name: muc_user_mark muc_user_mark_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
@@ -4492,16 +4287,6 @@ ALTER TABLE ONLY public.person_extent_2018_07_12
 
 ALTER TABLE ONLY public.person_extent
     ADD CONSTRAINT person_extent_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4325 (class 2606 OID 18287)
--- Name: person_user_mac_key person_user_mac_key_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.person_user_mac_key
-    ADD CONSTRAINT person_user_mac_key_pkey PRIMARY KEY (user_name, host, os);
-
 
 --
 -- TOC entry 4114 (class 2606 OID 18289)
@@ -4765,30 +4550,12 @@ ALTER TABLE ONLY public.sms_user_info
 
 
 --
--- TOC entry 4426 (class 2606 OID 18347)
--- Name: spool spool_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.spool
-    ADD CONSTRAINT spool_pkey PRIMARY KEY (seq);
-
-
---
 -- TOC entry 4434 (class 2606 OID 18349)
 -- Name: user_block_list user_block_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
 --
 
 ALTER TABLE ONLY public.user_block_list
     ADD CONSTRAINT user_block_pkey PRIMARY KEY (username, blockuser);
-
-
---
--- TOC entry 4440 (class 2606 OID 18351)
--- Name: user_mac_key user_mac_key_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.user_mac_key
-    ADD CONSTRAINT user_mac_key_pkey PRIMARY KEY (user_name, host, os);
 
 
 --
@@ -4897,25 +4664,6 @@ ALTER TABLE ONLY public.warn_msg_history
 
 ALTER TABLE ONLY public.white_list
     ADD CONSTRAINT white_list_pkey PRIMARY KEY (username);
-
-
---
--- TOC entry 4509 (class 2606 OID 18377)
--- Name: white_list_test white_list_test_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.white_list_test
-    ADD CONSTRAINT white_list_test_pkey PRIMARY KEY (username);
-
-
---
--- TOC entry 4512 (class 2606 OID 18379)
--- Name: win_dump_url win_dump_url_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.win_dump_url
-    ADD CONSTRAINT win_dump_url_pkey PRIMARY KEY (user_name, dump_url);
-
 
 --
 -- TOC entry 4269 (class 1259 OID 18380)
@@ -5170,14 +4918,6 @@ CREATE INDEX host_users_user_name_idx ON public.host_users USING btree (user_nam
 --
 
 CREATE INDEX host_users_version_idx ON public.host_users USING btree (version);
-
-
---
--- TOC entry 4421 (class 1259 OID 18418)
--- Name: i_despool; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_despool ON public.spool USING btree (username);
 
 
 --
@@ -5522,14 +5262,6 @@ CREATE INDEX invite_spool_username_inviter_host_ihost_idx ON public.invite_spool
 --
 
 CREATE INDEX ix_mission_member_list ON public.mission_member USING btree (id, publisher);
-
-
---
--- TOC entry 4431 (class 1259 OID 18462)
--- Name: ix_user_name; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX ix_user_name ON public.test_user USING btree (name);
 
 
 --
@@ -6147,47 +5879,6 @@ CREATE INDEX muc_room_users_username_host_update_time_idx ON public.muc_room_use
 
 CREATE INDEX muc_room_users_username_idx ON public.muc_room_users USING btree (username);
 
-
---
--- TOC entry 4275 (class 1259 OID 18540)
--- Name: muc_spool_creaetd_at_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX muc_spool_creaetd_at_idx ON public.muc_spool USING btree (created_at);
-
-
---
--- TOC entry 4276 (class 1259 OID 18541)
--- Name: muc_spool_created_at_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX muc_spool_created_at_idx ON public.muc_spool USING btree (created_at) WHERE (send_flag = '1'::text);
-
-
---
--- TOC entry 4277 (class 1259 OID 18542)
--- Name: muc_spool_created_at_idx1; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX muc_spool_created_at_idx1 ON public.muc_spool USING btree (created_at) WHERE (send_flag = '0'::text);
-
-
---
--- TOC entry 4280 (class 1259 OID 18543)
--- Name: muc_spool_send_flag_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX muc_spool_send_flag_idx ON public.muc_spool USING btree (send_flag);
-
-
---
--- TOC entry 4281 (class 1259 OID 18544)
--- Name: muc_spool_username_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX muc_spool_username_idx ON public.muc_spool USING btree (username);
-
-
 --
 -- TOC entry 4282 (class 1259 OID 18545)
 -- Name: muc_user_mark_index; Type: INDEX; Schema: public; Owner: ejabberd
@@ -6346,23 +6037,6 @@ CREATE UNIQUE INDEX person_extent_owner_host_key_idx ON public.person_extent USI
 --
 
 CREATE INDEX person_extent_owner_key_idx ON public.person_extent USING btree (owner, key);
-
-
---
--- TOC entry 4326 (class 1259 OID 18565)
--- Name: person_user_mac_key_user_name_host_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX person_user_mac_key_user_name_host_idx ON public.person_user_mac_key USING btree (user_name, host);
-
-
---
--- TOC entry 4327 (class 1259 OID 18566)
--- Name: person_user_mac_key_user_name_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX person_user_mac_key_user_name_idx ON public.person_user_mac_key USING btree (user_name);
-
 
 --
 -- TOC entry 4400 (class 1259 OID 18567)
@@ -6530,46 +6204,6 @@ CREATE INDEX scheduling_info_scheduling_id_member_idx ON public.scheduling_info 
 --
 
 CREATE INDEX scheduling_info_update_time_member_idx ON public.scheduling_info USING btree (update_time, member);
-
-
---
--- TOC entry 4422 (class 1259 OID 18588)
--- Name: spool_crated_at_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX spool_crated_at_idx ON public.spool USING btree (created_at);
-
-
---
--- TOC entry 4423 (class 1259 OID 18589)
--- Name: spool_created_at_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX spool_created_at_idx ON public.spool USING btree (created_at) WHERE (send_flag = '1'::text);
-
-
---
--- TOC entry 4424 (class 1259 OID 18590)
--- Name: spool_created_at_idx1; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX spool_created_at_idx1 ON public.spool USING btree (created_at) WHERE (send_flag = '0'::text);
-
-
---
--- TOC entry 4427 (class 1259 OID 18591)
--- Name: spool_send_flag_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX spool_send_flag_idx ON public.spool USING btree (send_flag);
-
-
---
--- TOC entry 4438 (class 1259 OID 18592)
--- Name: uer_mac_key_user_name_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX uer_mac_key_user_name_idx ON public.user_mac_key USING btree (user_name);
 
 
 --
@@ -6858,15 +6492,6 @@ CREATE UNIQUE INDEX warn_msg_history_msg_id_idx2 ON public.warn_msg_history USIN
 --
 
 CREATE INDEX warn_msg_history_read_flag_idx ON public.warn_msg_history USING btree (read_flag) WHERE (read_flag <> '3'::smallint);
-
-
---
--- TOC entry 4510 (class 1259 OID 18629)
--- Name: win_dump_url_dump_time_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX win_dump_url_dump_time_idx ON public.win_dump_url USING btree (dump_time);
-
 
 --
 -- TOC entry 4513 (class 2606 OID 18630)
@@ -9141,16 +8766,6 @@ REVOKE ALL ON SEQUENCE public.warn_msg_history_id_seq FROM postgres;
 --
 
 REVOKE ALL ON TABLE public.warn_msg_history_backup FROM postgres;
-
-
---
--- TOC entry 5054 (class 0 OID 0)
--- Dependencies: 354
--- Name: TABLE white_list_test; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.white_list_test FROM postgres;
-
 
 -- Completed on 2018-12-13 17:11:42 CST
 
