@@ -191,47 +191,6 @@ CREATE TABLE public.admin_user (
 ALTER TABLE public.admin_user OWNER TO ejabberd;
 
 --
--- TOC entry 204 (class 1259 OID 17235)
--- Name: android_send_stat; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.android_send_stat (
-    id bigint NOT NULL,
-    uuid text NOT NULL,
-    imei text NOT NULL,
-    payload text NOT NULL,
-    done integer DEFAULT 0,
-    created_at timestamp without time zone DEFAULT now() NOT NULL,
-    update_at timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.android_send_stat OWNER TO ejabberd;
-
---
--- TOC entry 205 (class 1259 OID 17244)
--- Name: android_send_stat_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.android_send_stat_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.android_send_stat_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 4874 (class 0 OID 0)
--- Dependencies: 205
--- Name: android_send_stat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.android_send_stat_id_seq OWNED BY public.android_send_stat.id;
-
---
 -- TOC entry 207 (class 1259 OID 17249)
 -- Name: client_config_sync; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -378,20 +337,6 @@ ALTER SEQUENCE public.client_config_sync_id_seq OWNED BY public.client_config_sy
 
 
 --
--- TOC entry 209 (class 1259 OID 17261)
--- Name: day_online_time; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.day_online_time (
-    username character varying(50) NOT NULL,
-    date_time character varying(20) NOT NULL,
-    online_time integer
-);
-
-
-ALTER TABLE public.day_online_time OWNER TO ejabberd;
-
---
 -- TOC entry 210 (class 1259 OID 17264)
 -- Name: destroy_muc_info; Type: TABLE; Schema: public; Owner: ejabberd
 --
@@ -430,19 +375,6 @@ ALTER TABLE public.destroy_muc_info_id_seq OWNER TO ejabberd;
 
 ALTER SEQUENCE public.destroy_muc_info_id_seq OWNED BY public.destroy_muc_info.id;
 
-
---
--- TOC entry 212 (class 1259 OID 17273)
--- Name: domain_mapped_url; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.domain_mapped_url (
-    domain text NOT NULL,
-    url text NOT NULL
-);
-
-
-ALTER TABLE public.domain_mapped_url OWNER TO ejabberd;
 
 --
 -- TOC entry 213 (class 1259 OID 17279)
@@ -649,48 +581,6 @@ ALTER SEQUENCE public.fresh_empl_entering_id_seq OWNED BY public.fresh_empl_ente
 
 
 --
--- TOC entry 221 (class 1259 OID 17326)
--- Name: group_extent; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.group_extent (
-    id bigint NOT NULL,
-    group_id text NOT NULL,
-    key text NOT NULL,
-    value text NOT NULL,
-    create_at timestamp without time zone DEFAULT now() NOT NULL,
-    update_at timestamp without time zone DEFAULT now() NOT NULL,
-    version integer DEFAULT 1
-);
-
-
-ALTER TABLE public.group_extent OWNER TO ejabberd;
-
---
--- TOC entry 222 (class 1259 OID 17335)
--- Name: group_extent_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.group_extent_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.group_extent_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 4908 (class 0 OID 0)
--- Dependencies: 222
--- Name: group_extent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.group_extent_id_seq OWNED BY public.group_extent.id;
-
-
---
 -- TOC entry 223 (class 1259 OID 17337)
 -- Name: host_info; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -852,77 +742,6 @@ CREATE TABLE public.last (
 
 
 ALTER TABLE public.last OWNER TO ejabberd;
-
---
--- TOC entry 233 (class 1259 OID 17417)
--- Name: mac_push_notice; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.mac_push_notice (
-    user_name character varying(200) NOT NULL,
-    shield_user character varying(200) NOT NULL
-);
-
-
-ALTER TABLE public.mac_push_notice OWNER TO ejabberd;
-
---
--- TOC entry 234 (class 1259 OID 17420)
--- Name: mask_history; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.mask_history (
-    m_from character varying(255),
-    m_to character varying(255),
-    m_body text,
-    create_time timestamp with time zone DEFAULT now(),
-    id bigint NOT NULL,
-    read_flag smallint DEFAULT 0,
-    msg_id text,
-    from_host text,
-    to_host text
-);
-
-
-ALTER TABLE public.mask_history OWNER TO ejabberd;
-
---
--- TOC entry 235 (class 1259 OID 17428)
--- Name: mask_history_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.mask_history_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.mask_history_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 4917 (class 0 OID 0)
--- Dependencies: 235
--- Name: mask_history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.mask_history_id_seq OWNED BY public.mask_history.id;
-
-
---
--- TOC entry 236 (class 1259 OID 17430)
--- Name: mask_users; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.mask_users (
-    user_name text NOT NULL,
-    masked_user text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.mask_users OWNER TO ejabberd;
 
 --
 -- TOC entry 237 (class 1259 OID 17437)
@@ -1131,106 +950,6 @@ ALTER SEQUENCE public.meeting_info_id_seq OWNED BY public.meeting_info.id;
 
 
 --
--- TOC entry 239 (class 1259 OID 17451)
--- Name: mission_list_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.mission_list_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.mission_list_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 240 (class 1259 OID 17453)
--- Name: mission_list; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.mission_list (
-    id bigint DEFAULT nextval('public.mission_list_id_seq'::regclass) NOT NULL,
-    publisher character varying(255) NOT NULL,
-    create_time timestamp with time zone DEFAULT now() NOT NULL,
-    title text NOT NULL,
-    content text NOT NULL,
-    end_time timestamp with time zone DEFAULT now() NOT NULL,
-    body text DEFAULT ''::text NOT NULL,
-    state integer DEFAULT 0
-);
-
-
-ALTER TABLE public.mission_list OWNER TO ejabberd;
-
---
--- TOC entry 241 (class 1259 OID 17464)
--- Name: mission_member_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.mission_member_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.mission_member_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 242 (class 1259 OID 17466)
--- Name: mission_member; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.mission_member (
-    id bigint,
-    publisher character varying(255) NOT NULL,
-    last_effect_time timestamp with time zone DEFAULT now() NOT NULL,
-    effect_count integer DEFAULT 0 NOT NULL,
-    member_id bigint DEFAULT nextval('public.mission_member_id_seq'::regclass) NOT NULL,
-    userstate integer DEFAULT 0 NOT NULL,
-    nexttime timestamp with time zone DEFAULT now()
-);
-
-
-ALTER TABLE public.mission_member OWNER TO ejabberd;
-
---
--- TOC entry 243 (class 1259 OID 17474)
--- Name: mission_milestone_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.mission_milestone_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.mission_milestone_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 244 (class 1259 OID 17476)
--- Name: mission_milestone; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.mission_milestone (
-    id bigint DEFAULT nextval('public.mission_milestone_id_seq'::regclass) NOT NULL,
-    mission_id bigint DEFAULT 0,
-    create_time timestamp with time zone DEFAULT now() NOT NULL,
-    title text DEFAULT ''::text NOT NULL,
-    content text DEFAULT ''::text NOT NULL,
-    body text DEFAULT ''::text NOT NULL,
-    end_time timestamp with time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.mission_milestone OWNER TO ejabberd;
-
---
 -- TOC entry 245 (class 1259 OID 17489)
 -- Name: motd; Type: TABLE; Schema: public; Owner: ejabberd
 --
@@ -1315,82 +1034,6 @@ ALTER TABLE public.msg_history_id_seq OWNER TO ejabberd;
 
 ALTER SEQUENCE public.msg_history_id_seq OWNED BY public.msg_history.id;
 
-
---
--- TOC entry 249 (class 1259 OID 17516)
--- Name: msg_history_view; Type: VIEW; Schema: public; Owner: postgres
---
-
-CREATE VIEW public.msg_history_view AS
- SELECT msg_history.m_from,
-    msg_history.m_to,
-    msg_history.create_time,
-    msg_history.id,
-    msg_history.read_flag,
-    msg_history.msg_id,
-    msg_history.from_host,
-    msg_history.to_host
-   FROM public.msg_history;
-
-
-ALTER TABLE public.msg_history_view OWNER TO postgres;
-
---
--- TOC entry 250 (class 1259 OID 17520)
--- Name: msg_stat; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.msg_stat (
-    id integer NOT NULL,
-    reportdate date,
-    m_from text,
-    count integer,
-    flag text DEFAULT 'muc'::text,
-    nickname text
-);
-
-
-ALTER TABLE public.msg_stat OWNER TO postgres;
-
---
--- TOC entry 251 (class 1259 OID 17527)
--- Name: msg_stat_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.msg_stat_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.msg_stat_id_seq OWNER TO postgres;
-
---
--- TOC entry 4940 (class 0 OID 0)
--- Dependencies: 251
--- Name: msg_stat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.msg_stat_id_seq OWNED BY public.msg_stat.id;
-
-
---
--- TOC entry 252 (class 1259 OID 17529)
--- Name: msgcount; Type: VIEW; Schema: public; Owner: postgres
---
-
-CREATE VIEW public.msgcount AS
- SELECT count(1) AS cnt,
-    msg_history.m_from,
-    (msg_history.create_time)::date AS s_date
-   FROM public.msg_history
-  WHERE (msg_history.create_time >= (('now'::text)::date - '3 days'::interval))
-  GROUP BY msg_history.m_from, ((msg_history.create_time)::date);
-
-
-ALTER TABLE public.msgcount OWNER TO postgres;
 
 --
 -- TOC entry 253 (class 1259 OID 17533)
@@ -1572,24 +1215,6 @@ ALTER TABLE public.muc_room_users OWNER TO ejabberd;
 COMMENT ON COLUMN public.muc_room_users.update_time IS '更新时间';
 
 
---
--- TOC entry 263 (class 1259 OID 17595)
--- Name: muc_room_users_backup; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.muc_room_users_backup (
-    muc_name character varying(200) NOT NULL,
-    username character varying(200) NOT NULL,
-    host character varying(200) NOT NULL,
-    subscribe_flag text DEFAULT '0'::text NOT NULL,
-    id bigint NOT NULL,
-    date bigint DEFAULT 0,
-    login_date integer
-);
-
-
-ALTER TABLE public.muc_room_users_backup OWNER TO ejabberd;
-
 
 --
 -- TOC entry 266 (class 1259 OID 17614)
@@ -1665,55 +1290,6 @@ CREATE TABLE public.muc_vcard_info_backup (
 
 ALTER TABLE public.muc_vcard_info_backup OWNER TO ejabberd;
 
---
--- TOC entry 270 (class 1259 OID 17636)
--- Name: muc_white_list; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.muc_white_list (
-    muc_name text NOT NULL,
-    date_time timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.muc_white_list OWNER TO ejabberd;
-
---
--- TOC entry 271 (class 1259 OID 17643)
--- Name: non_human; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.non_human (
-    id integer NOT NULL,
-    nickname text NOT NULL
-);
-
-
-ALTER TABLE public.non_human OWNER TO postgres;
-
---
--- TOC entry 272 (class 1259 OID 17649)
--- Name: non_human_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.non_human_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.non_human_id_seq OWNER TO postgres;
-
---
--- TOC entry 4948 (class 0 OID 0)
--- Dependencies: 272
--- Name: non_human_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.non_human_id_seq OWNED BY public.non_human.id;
-
 
 --
 -- TOC entry 273 (class 1259 OID 17651)
@@ -1755,123 +1331,6 @@ ALTER TABLE public.notice_history_id_seq OWNER TO ejabberd;
 
 ALTER SEQUENCE public.notice_history_id_seq OWNED BY public.notice_history.id;
 
-
---
--- TOC entry 275 (class 1259 OID 17661)
--- Name: person_extent; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.person_extent (
-    id bigint NOT NULL,
-    owner text NOT NULL,
-    key text NOT NULL,
-    value text NOT NULL,
-    create_at timestamp without time zone DEFAULT now() NOT NULL,
-    update_at timestamp without time zone DEFAULT now() NOT NULL,
-    version integer DEFAULT 1,
-    host text DEFAULT 'ejabhost1'::text
-);
-
-
-ALTER TABLE public.person_extent OWNER TO ejabberd;
-
---
--- TOC entry 276 (class 1259 OID 17671)
--- Name: person_extent_2017_09_22; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.person_extent_2017_09_22 (
-    id bigint NOT NULL,
-    owner text NOT NULL,
-    key text NOT NULL,
-    value text NOT NULL,
-    create_at timestamp without time zone NOT NULL,
-    update_at timestamp without time zone NOT NULL,
-    version integer
-);
-
-
-ALTER TABLE public.person_extent_2017_09_22 OWNER TO postgres;
-
---
--- TOC entry 277 (class 1259 OID 17677)
--- Name: person_extent_2018_05_02; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.person_extent_2018_05_02 (
-    id bigint NOT NULL,
-    owner text NOT NULL,
-    key text NOT NULL,
-    value text NOT NULL,
-    create_at timestamp without time zone DEFAULT now() NOT NULL,
-    update_at timestamp without time zone DEFAULT now() NOT NULL,
-    version integer DEFAULT 1,
-    host text DEFAULT 'ejabhost1'::text
-);
-
-
-ALTER TABLE public.person_extent_2018_05_02 OWNER TO ejabberd;
-
---
--- TOC entry 278 (class 1259 OID 17687)
--- Name: person_extent_2018_07_12; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.person_extent_2018_07_12 (
-    id bigint NOT NULL,
-    owner text NOT NULL,
-    key text NOT NULL,
-    value text NOT NULL,
-    create_at timestamp without time zone NOT NULL,
-    update_at timestamp without time zone NOT NULL,
-    version integer,
-    host text
-);
-
-
-ALTER TABLE public.person_extent_2018_07_12 OWNER TO postgres;
-
---
--- TOC entry 279 (class 1259 OID 17693)
--- Name: person_extent_backup_2018_01_28; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.person_extent_backup_2018_01_28 (
-    id bigint NOT NULL,
-    owner text NOT NULL,
-    key text NOT NULL,
-    value text NOT NULL,
-    create_at timestamp without time zone DEFAULT now() NOT NULL,
-    update_at timestamp without time zone DEFAULT now() NOT NULL,
-    version integer DEFAULT 1,
-    host text DEFAULT 'ejabhost1'::text
-);
-
-
-ALTER TABLE public.person_extent_backup_2018_01_28 OWNER TO ejabberd;
-
---
--- TOC entry 280 (class 1259 OID 17703)
--- Name: person_extent_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.person_extent_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.person_extent_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 4953 (class 0 OID 0)
--- Dependencies: 280
--- Name: person_extent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.person_extent_id_seq OWNED BY public.person_extent.id;
 
 --
 -- TOC entry 282 (class 1259 OID 17715)
@@ -2826,165 +2285,6 @@ ALTER SEQUENCE public.revoke_msg_history_id_seq OWNED BY public.revoke_msg_histo
 
 
 --
--- TOC entry 311 (class 1259 OID 17858)
--- Name: robot_info; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.robot_info (
-    en_name text NOT NULL,
-    cn_name text NOT NULL,
-    request_url text NOT NULL,
-    rbt_desc text,
-    rbt_body text NOT NULL,
-    rbt_version bigint,
-    password text,
-    recommend smallint,
-    host text DEFAULT 'ejabhost1'::text
-);
-
-
-ALTER TABLE public.robot_info OWNER TO ejabberd;
-
---
--- TOC entry 312 (class 1259 OID 17865)
--- Name: robot_pubsub; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.robot_pubsub (
-    rbt_name text NOT NULL,
-    user_name text NOT NULL,
-    host text DEFAULT 'ejabhost1'::text,
-    rbt_host text DEFAULT 'ejabhost1'::text,
-    user_host text DEFAULT 'ejabhost1'::text
-);
-
-
-ALTER TABLE public.robot_pubsub OWNER TO ejabberd;
-
---
--- TOC entry 313 (class 1259 OID 17874)
--- Name: robot_pubsub_backup; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.robot_pubsub_backup (
-    rbt_name text NOT NULL,
-    user_name text NOT NULL
-);
-
-
-ALTER TABLE public.robot_pubsub_backup OWNER TO ejabberd;
-
---
--- TOC entry 314 (class 1259 OID 17880)
--- Name: robot_pubsub_test; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.robot_pubsub_test (
-    rbt_name text NOT NULL,
-    user_name text NOT NULL,
-    host text DEFAULT 'ejabhost1'::text,
-    rbt_host text DEFAULT 'ejabhost1'::text,
-    user_host text DEFAULT 'ejabhost1'::text
-);
-
-
-ALTER TABLE public.robot_pubsub_test OWNER TO postgres;
-
---
--- TOC entry 315 (class 1259 OID 17889)
--- Name: users; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.users (
-    username text NOT NULL,
-    password text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL,
-    name text,
-    department text DEFAULT '未知部门'::text,
-    dep1 text DEFAULT '未知部门'::text,
-    dep2 text DEFAULT ''::text,
-    dep3 text DEFAULT ''::text,
-    dep4 text DEFAULT ''::text,
-    dep5 text DEFAULT ''::text,
-    fpinyin text,
-    spinyin text,
-    frozen_flag text DEFAULT '0'::text,
-    sn text,
-    id bigint NOT NULL,
-    hire_type text,
-    version integer DEFAULT 1,
-    hire_flag smallint,
-    type character(1) DEFAULT 'u'::bpchar,
-    ps_deptid text DEFAULT 'QUNAR'::text NOT NULL
-);
-
-
-ALTER TABLE public.users OWNER TO ejabberd;
-
---
--- TOC entry 316 (class 1259 OID 17906)
--- Name: roommsgview_old; Type: VIEW; Schema: public; Owner: postgres
---
-
-CREATE VIEW public.roommsgview_old AS
- SELECT u.username,
-    rh.nick,
-    rh.create_time
-   FROM (public.muc_room_history rh
-     JOIN public.users u ON (((rh.nick)::text = u.name)));
-
-
-ALTER TABLE public.roommsgview_old OWNER TO postgres;
-
---
--- TOC entry 317 (class 1259 OID 17910)
--- Name: roster_version; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.roster_version (
-    username text NOT NULL,
-    version text NOT NULL
-);
-
-
-ALTER TABLE public.roster_version OWNER TO ejabberd;
-
---
--- TOC entry 318 (class 1259 OID 17916)
--- Name: rostergroups; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.rostergroups (
-    username text NOT NULL,
-    jid text NOT NULL,
-    grp text NOT NULL
-);
-
-
-ALTER TABLE public.rostergroups OWNER TO ejabberd;
-
---
--- TOC entry 319 (class 1259 OID 17922)
--- Name: rosterusers; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.rosterusers (
-    username text NOT NULL,
-    jid text NOT NULL,
-    nick text NOT NULL,
-    subscription character(1) NOT NULL,
-    ask character(1) NOT NULL,
-    askmessage text NOT NULL,
-    server character(1) NOT NULL,
-    subscribe text,
-    type text,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.rosterusers OWNER TO ejabberd;
-
---
 -- TOC entry 320 (class 1259 OID 17929)
 -- Name: s2s_mapped_host; Type: TABLE; Schema: public; Owner: ejabberd
 --
@@ -3248,140 +2548,6 @@ ALTER SEQUENCE public.scheduling_info_id_seq OWNED BY public.scheduling_info.id;
 
 
 --
--- TOC entry 323 (class 1259 OID 17950)
--- Name: sms_log_info; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.sms_log_info (
-    id bigint NOT NULL,
-    ip text NOT NULL,
-    tel text NOT NULL,
-    create_time timestamp with time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.sms_log_info OWNER TO ejabberd;
-
---
--- TOC entry 324 (class 1259 OID 17957)
--- Name: sms_log_info_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.sms_log_info_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.sms_log_info_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 5043 (class 0 OID 0)
--- Dependencies: 324
--- Name: sms_log_info_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.sms_log_info_id_seq OWNED BY public.sms_log_info.id;
-
-
---
--- TOC entry 325 (class 1259 OID 17959)
--- Name: sms_request_info; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.sms_request_info (
-    id bigint NOT NULL,
-    ip text NOT NULL,
-    tel text NOT NULL,
-    create_time timestamp with time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.sms_request_info OWNER TO ejabberd;
-
---
--- TOC entry 326 (class 1259 OID 17966)
--- Name: sms_request_info_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.sms_request_info_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.sms_request_info_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 5044 (class 0 OID 0)
--- Dependencies: 326
--- Name: sms_request_info_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.sms_request_info_id_seq OWNED BY public.sms_request_info.id;
-
-
---
--- TOC entry 327 (class 1259 OID 17968)
--- Name: sms_user_info; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.sms_user_info (
-    user_name text NOT NULL,
-    last_sms_time timestamp without time zone DEFAULT now() NOT NULL,
-    phone text NOT NULL,
-    verify_code text
-);
-
-
-ALTER TABLE public.sms_user_info OWNER TO ejabberd;
-
---
--- TOC entry 330 (class 1259 OID 17988)
--- Name: sr_group; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.sr_group (
-    name text NOT NULL,
-    opts text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.sr_group OWNER TO ejabberd;
-
---
--- TOC entry 331 (class 1259 OID 17995)
--- Name: sr_user; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.sr_user (
-    jid text NOT NULL,
-    grp text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.sr_user OWNER TO ejabberd;
-
---
--- TOC entry 334 (class 1259 OID 18015)
--- Name: user_block_list; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.user_block_list (
-    username text NOT NULL,
-    blockuser text NOT NULL
-);
-
-
-ALTER TABLE public.user_block_list OWNER TO ejabberd;
-
---
 -- TOC entry 335 (class 1259 OID 18021)
 -- Name: user_friends; Type: TABLE; Schema: public; Owner: ejabberd
 --
@@ -3398,19 +2564,6 @@ CREATE TABLE public.user_friends (
 
 ALTER TABLE public.user_friends OWNER TO ejabberd;
 
---
--- TOC entry 337 (class 1259 OID 18037)
--- Name: user_name; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.user_name (
-    user_name text NOT NULL,
-    masked_user text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.user_name OWNER TO ejabberd;
 
 --
 -- TOC entry 338 (class 1259 OID 18044)
@@ -3463,78 +2616,6 @@ CREATE TABLE public.user_relation_opts (
 
 ALTER TABLE public.user_relation_opts OWNER TO ejabberd;
 
---
--- TOC entry 341 (class 1259 OID 18070)
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: ejabberd
---
-
-CREATE SEQUENCE public.users_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.users_id_seq OWNER TO ejabberd;
-
---
--- TOC entry 5046 (class 0 OID 0)
--- Dependencies: 341
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ejabberd
---
-
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
-
-
---
--- TOC entry 342 (class 1259 OID 18072)
--- Name: vcard; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.vcard (
-    username text NOT NULL,
-    vcard text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.vcard OWNER TO ejabberd;
-
---
--- TOC entry 343 (class 1259 OID 18079)
--- Name: vcard_search; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.vcard_search (
-    username text NOT NULL,
-    lusername text NOT NULL,
-    fn text NOT NULL,
-    lfn text NOT NULL,
-    family text NOT NULL,
-    lfamily text NOT NULL,
-    given text NOT NULL,
-    lgiven text NOT NULL,
-    middle text NOT NULL,
-    lmiddle text NOT NULL,
-    nickname text NOT NULL,
-    lnickname text NOT NULL,
-    bday text NOT NULL,
-    lbday text NOT NULL,
-    ctry text NOT NULL,
-    lctry text NOT NULL,
-    locality text NOT NULL,
-    llocality text NOT NULL,
-    email text NOT NULL,
-    lemail text NOT NULL,
-    orgname text NOT NULL,
-    lorgname text NOT NULL,
-    orgunit text NOT NULL,
-    lorgunit text NOT NULL
-);
-
-
-ALTER TABLE public.vcard_search OWNER TO ejabberd;
 
 --
 -- TOC entry 344 (class 1259 OID 18085)
@@ -3579,70 +2660,6 @@ ALTER TABLE public.vcard_version_id_seq OWNER TO ejabberd;
 
 ALTER SEQUENCE public.vcard_version_id_seq OWNED BY public.vcard_version.id;
 
-
---
--- TOC entry 346 (class 1259 OID 18097)
--- Name: vcard_version_test_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.vcard_version_test_id_seq
-    START WITH 36101
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.vcard_version_test_id_seq OWNER TO postgres;
-
---
--- TOC entry 347 (class 1259 OID 18099)
--- Name: vcard_version_test; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.vcard_version_test (
-    username text NOT NULL,
-    version integer DEFAULT 1,
-    url text,
-    uin character varying(30),
-    id bigint DEFAULT nextval('public.vcard_version_test_id_seq'::regclass) NOT NULL,
-    profile_version smallint DEFAULT (1)::smallint,
-    mood text,
-    gender integer DEFAULT 0 NOT NULL,
-    host text DEFAULT 'ejabhost1'::text
-);
-
-
-ALTER TABLE public.vcard_version_test OWNER TO postgres;
-
---
--- TOC entry 348 (class 1259 OID 18110)
--- Name: vcard_xupdate; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.vcard_xupdate (
-    username text NOT NULL,
-    hash text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
-);
-
-
-ALTER TABLE public.vcard_xupdate OWNER TO ejabberd;
-
---
--- TOC entry 349 (class 1259 OID 18117)
--- Name: virtual_user_list; Type: TABLE; Schema: public; Owner: ejabberd
---
-
-CREATE TABLE public.virtual_user_list (
-    virtual_user text NOT NULL,
-    real_user text NOT NULL,
-    on_duty_flag smallint,
-    busisupplierid text NOT NULL
-);
-
-
-ALTER TABLE public.virtual_user_list OWNER TO ejabberd;
 
 --
 -- TOC entry 350 (class 1259 OID 18123)
@@ -3721,12 +2738,6 @@ CREATE TABLE public.white_list (
 
 
 ALTER TABLE public.white_list OWNER TO ejabberd;
---
--- TOC entry 3837 (class 2604 OID 18165)
--- Name: android_send_stat id; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.android_send_stat ALTER COLUMN id SET DEFAULT nextval('public.android_send_stat_id_seq'::regclass);
 
 
 --
@@ -3754,14 +2765,6 @@ ALTER TABLE ONLY public.fresh_empl_entering ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- TOC entry 3860 (class 2604 OID 18170)
--- Name: group_extent id; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.group_extent ALTER COLUMN id SET DEFAULT nextval('public.group_extent_id_seq'::regclass);
-
-
---
 -- TOC entry 3862 (class 2604 OID 18171)
 -- Name: host_info id; Type: DEFAULT; Schema: public; Owner: postgres
 --
@@ -3775,14 +2778,6 @@ ALTER TABLE ONLY public.host_info ALTER COLUMN id SET DEFAULT nextval('public.ho
 --
 
 ALTER TABLE ONLY public.host_users ALTER COLUMN id SET DEFAULT nextval('public.host_users_id_seq'::regclass);
-
-
---
--- TOC entry 3897 (class 2604 OID 18173)
--- Name: mask_history id; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.mask_history ALTER COLUMN id SET DEFAULT nextval('public.mask_history_id_seq'::regclass);
 
 
 --
@@ -3802,14 +2797,6 @@ ALTER TABLE ONLY public.msg_history ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 3932 (class 2604 OID 18176)
--- Name: msg_stat id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.msg_stat ALTER COLUMN id SET DEFAULT nextval('public.msg_stat_id_seq'::regclass);
-
-
---
 -- TOC entry 3939 (class 2604 OID 18177)
 -- Name: muc_room_history id; Type: DEFAULT; Schema: public; Owner: ejabberd
 --
@@ -3826,27 +2813,11 @@ ALTER TABLE ONLY public.muc_user_mark ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3956 (class 2604 OID 18180)
--- Name: non_human id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.non_human ALTER COLUMN id SET DEFAULT nextval('public.non_human_id_seq'::regclass);
-
-
---
 -- TOC entry 3959 (class 2604 OID 18181)
 -- Name: notice_history id; Type: DEFAULT; Schema: public; Owner: ejabberd
 --
 
 ALTER TABLE ONLY public.notice_history ALTER COLUMN id SET DEFAULT nextval('public.notice_history_id_seq'::regclass);
-
-
---
--- TOC entry 3964 (class 2604 OID 18182)
--- Name: person_extent id; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.person_extent ALTER COLUMN id SET DEFAULT nextval('public.person_extent_id_seq'::regclass);
 
 
 --
@@ -3937,28 +2908,6 @@ ALTER TABLE ONLY public.revoke_msg_history ALTER COLUMN id SET DEFAULT nextval('
 ALTER TABLE ONLY public.scheduling_info ALTER COLUMN id SET DEFAULT nextval('public.scheduling_info_id_seq'::regclass);
 
 
---
--- TOC entry 4034 (class 2604 OID 18194)
--- Name: sms_log_info id; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.sms_log_info ALTER COLUMN id SET DEFAULT nextval('public.sms_log_info_id_seq'::regclass);
-
-
---
--- TOC entry 4036 (class 2604 OID 18195)
--- Name: sms_request_info id; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.sms_request_info ALTER COLUMN id SET DEFAULT nextval('public.sms_request_info_id_seq'::regclass);
-
---
--- TOC entry 4020 (class 2604 OID 18197)
--- Name: users id; Type: DEFAULT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
 
 --
 -- TOC entry 4065 (class 2604 OID 18198)
@@ -3986,24 +2935,6 @@ ALTER TABLE ONLY public.admin_user
 
 
 --
--- TOC entry 4272 (class 2606 OID 18203)
--- Name: muc_room_users_backup along_tmp_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.muc_room_users_backup
-    ADD CONSTRAINT along_tmp_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4086 (class 2606 OID 18205)
--- Name: android_send_stat android_send_stat_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.android_send_stat
-    ADD CONSTRAINT android_send_stat_pkey PRIMARY KEY (id);
-
-
---
 -- TOC entry 4092 (class 2606 OID 18207)
 -- Name: client_config_sync client_config_sync_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -4011,14 +2942,6 @@ ALTER TABLE ONLY public.android_send_stat
 ALTER TABLE ONLY public.client_config_sync
     ADD CONSTRAINT client_config_sync_pkey PRIMARY KEY (id);
 
-
---
--- TOC entry 4105 (class 2606 OID 18209)
--- Name: day_online_time day_online_time_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.day_online_time
-    ADD CONSTRAINT day_online_time_pkey PRIMARY KEY (username, date_time);
 
 
 --
@@ -4038,14 +2961,6 @@ ALTER TABLE ONLY public.destroy_muc_info
 ALTER TABLE ONLY public.fresh_empl_entering
     ADD CONSTRAINT fresh_empl_entering_pkey PRIMARY KEY (id);
 
-
---
--- TOC entry 4132 (class 2606 OID 18225)
--- Name: group_extent group_extent_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.group_extent
-    ADD CONSTRAINT group_extent_pkey PRIMARY KEY (id);
 
 
 --
@@ -4093,39 +3008,12 @@ ALTER TABLE ONLY public.last
 
 
 --
--- TOC entry 4164 (class 2606 OID 18241)
--- Name: mac_push_notice mac_user_notice_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.mac_push_notice
-    ADD CONSTRAINT mac_user_notice_pkey PRIMARY KEY (user_name, shield_user);
-
-
---
 -- TOC entry 4185 (class 2606 OID 18243)
 -- Name: meeting_info meeting_info_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.meeting_info
     ADD CONSTRAINT meeting_info_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4187 (class 2606 OID 18245)
--- Name: mission_list mission_list_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.mission_list
-    ADD CONSTRAINT mission_list_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4191 (class 2606 OID 18247)
--- Name: mission_milestone mission_milestone_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.mission_milestone
-    ADD CONSTRAINT mission_milestone_pkey PRIMARY KEY (id);
 
 
 --
@@ -4144,15 +3032,6 @@ ALTER TABLE ONLY public.motd
 
 ALTER TABLE ONLY public.msg_history_backup
     ADD CONSTRAINT msg_history_backup_tmp_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4224 (class 2606 OID 18253)
--- Name: msg_stat msg_stat_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.msg_stat
-    ADD CONSTRAINT msg_stat_pkey PRIMARY KEY (id);
 
 
 --
@@ -4217,32 +3096,6 @@ ALTER TABLE ONLY public.muc_vcard_info
     ADD CONSTRAINT muc_vcard_info_pkey PRIMARY KEY (muc_name);
 
 
---
--- TOC entry 4291 (class 2606 OID 18271)
--- Name: muc_white_list muc_white_list_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.muc_white_list
-    ADD CONSTRAINT muc_white_list_pkey PRIMARY KEY (muc_name);
-
-
---
--- TOC entry 4323 (class 2606 OID 18273)
--- Name: person_extent_backup_2018_01_28 new_person_extent_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.person_extent_backup_2018_01_28
-    ADD CONSTRAINT new_person_extent_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4293 (class 2606 OID 18275)
--- Name: non_human non_humam_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.non_human
-    ADD CONSTRAINT non_humam_pkey PRIMARY KEY (id);
-
 
 --
 -- TOC entry 4300 (class 2606 OID 18277)
@@ -4251,50 +3104,6 @@ ALTER TABLE ONLY public.non_human
 
 ALTER TABLE ONLY public.notice_history
     ADD CONSTRAINT notice_history_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4308 (class 2606 OID 18279)
--- Name: person_extent_2017_09_22 person_extent_2017_09_22_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.person_extent_2017_09_22
-    ADD CONSTRAINT person_extent_2017_09_22_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4313 (class 2606 OID 18281)
--- Name: person_extent_2018_05_02 person_extent_2018_05_02_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.person_extent_2018_05_02
-    ADD CONSTRAINT person_extent_2018_05_02_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4318 (class 2606 OID 18283)
--- Name: person_extent_2018_07_12 person_extent_2018_07_12_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.person_extent_2018_07_12
-    ADD CONSTRAINT person_extent_2018_07_12_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4305 (class 2606 OID 18285)
--- Name: person_extent person_extent_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.person_extent
-    ADD CONSTRAINT person_extent_pkey PRIMARY KEY (id);
-
---
--- TOC entry 4114 (class 2606 OID 18289)
--- Name: domain_mapped_url pk_domain_mapped_url; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.domain_mapped_url
-    ADD CONSTRAINT pk_domain_mapped_url PRIMARY KEY (domain, url);
 
 
 --
@@ -4322,25 +3131,6 @@ ALTER TABLE ONLY public.iplimit
 
 ALTER TABLE ONLY public.user_friends
     ADD CONSTRAINT pk_user_friends PRIMARY KEY (username, friend, host);
-
-
---
--- TOC entry 4484 (class 2606 OID 18297)
--- Name: virtual_user_list pk_virtual_user_list; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.virtual_user_list
-    ADD CONSTRAINT pk_virtual_user_list PRIMARY KEY (real_user, virtual_user);
-
-
---
--- TOC entry 4181 (class 2606 OID 18299)
--- Name: mask_users pkmask_users_v2; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.mask_users
-    ADD CONSTRAINT pkmask_users_v2 PRIMARY KEY (user_name, masked_user);
-
 
 --
 -- TOC entry 4329 (class 2606 OID 18301)
@@ -4460,51 +3250,6 @@ ALTER TABLE ONLY public.revoke_msg_history
 
 
 --
--- TOC entry 4386 (class 2606 OID 18327)
--- Name: robot_info robot_info_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.robot_info
-    ADD CONSTRAINT robot_info_pkey PRIMARY KEY (en_name);
-
-
---
--- TOC entry 4390 (class 2606 OID 18329)
--- Name: robot_pubsub_backup robot_pubsub_backup_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.robot_pubsub_backup
-    ADD CONSTRAINT robot_pubsub_backup_pkey PRIMARY KEY (rbt_name, user_name);
-
-
---
--- TOC entry 4388 (class 2606 OID 18331)
--- Name: robot_pubsub robot_pubsub_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.robot_pubsub
-    ADD CONSTRAINT robot_pubsub_pkey PRIMARY KEY (rbt_name, user_name);
-
-
---
--- TOC entry 4392 (class 2606 OID 18333)
--- Name: robot_pubsub_test robot_pubsub_test_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.robot_pubsub_test
-    ADD CONSTRAINT robot_pubsub_test_pkey PRIMARY KEY (rbt_name, user_name);
-
-
---
--- TOC entry 4399 (class 2606 OID 18335)
--- Name: roster_version roster_version_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.roster_version
-    ADD CONSTRAINT roster_version_pkey PRIMARY KEY (username);
-
-
---
 -- TOC entry 4405 (class 2606 OID 18337)
 -- Name: s2s_mapped_host s2s_mapped_host_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
 --
@@ -4520,42 +3265,6 @@ ALTER TABLE ONLY public.s2s_mapped_host
 
 ALTER TABLE ONLY public.scheduling_info
     ADD CONSTRAINT scheduling_info_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4416 (class 2606 OID 18341)
--- Name: sms_log_info sms_log_info_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.sms_log_info
-    ADD CONSTRAINT sms_log_info_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4418 (class 2606 OID 18343)
--- Name: sms_request_info sms_request_info_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.sms_request_info
-    ADD CONSTRAINT sms_request_info_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4420 (class 2606 OID 18345)
--- Name: sms_user_info sms_user_info_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.sms_user_info
-    ADD CONSTRAINT sms_user_info_pkey PRIMARY KEY (user_name);
-
-
---
--- TOC entry 4434 (class 2606 OID 18349)
--- Name: user_block_list user_block_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.user_block_list
-    ADD CONSTRAINT user_block_pkey PRIMARY KEY (username, blockuser);
 
 
 --
@@ -4586,57 +3295,12 @@ ALTER TABLE ONLY public.user_relation_opts
 
 
 --
--- TOC entry 4396 (class 2606 OID 18359)
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4461 (class 2606 OID 18361)
--- Name: vcard vcard_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.vcard
-    ADD CONSTRAINT vcard_pkey PRIMARY KEY (username);
-
-
---
--- TOC entry 4474 (class 2606 OID 18363)
--- Name: vcard_search vcard_search_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.vcard_search
-    ADD CONSTRAINT vcard_search_pkey PRIMARY KEY (lusername);
-
-
---
 -- TOC entry 4476 (class 2606 OID 18365)
 -- Name: vcard_version vcard_version_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
 --
 
 ALTER TABLE ONLY public.vcard_version
     ADD CONSTRAINT vcard_version_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4479 (class 2606 OID 18367)
--- Name: vcard_version_test vcard_version_test_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.vcard_version_test
-    ADD CONSTRAINT vcard_version_test_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4482 (class 2606 OID 18369)
--- Name: vcard_xupdate vcard_xupdate_pkey; Type: CONSTRAINT; Schema: public; Owner: ejabberd
---
-
-ALTER TABLE ONLY public.vcard_xupdate
-    ADD CONSTRAINT vcard_xupdate_pkey PRIMARY KEY (username);
 
 
 --
@@ -4665,44 +3329,6 @@ ALTER TABLE ONLY public.warn_msg_history
 ALTER TABLE ONLY public.white_list
     ADD CONSTRAINT white_list_pkey PRIMARY KEY (username);
 
---
--- TOC entry 4269 (class 1259 OID 18380)
--- Name: along_tmp_muc_name_username_date_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX along_tmp_muc_name_username_date_idx ON public.muc_room_users_backup USING btree (muc_name, username, date);
-
-
---
--- TOC entry 4270 (class 1259 OID 18381)
--- Name: along_tmp_muc_name_username_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX along_tmp_muc_name_username_idx ON public.muc_room_users_backup USING btree (muc_name, username);
-
-
---
--- TOC entry 4273 (class 1259 OID 18382)
--- Name: along_tmp_username_date_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX along_tmp_username_date_idx ON public.muc_room_users_backup USING btree (username, date);
-
-
---
--- TOC entry 4274 (class 1259 OID 18383)
--- Name: along_tmp_username_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX along_tmp_username_idx ON public.muc_room_users_backup USING btree (username);
-
-
---
--- TOC entry 4087 (class 1259 OID 18384)
--- Name: android_send_stat_uuid_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX android_send_stat_uuid_idx ON public.android_send_stat USING btree (uuid);
 
 
 --
@@ -4863,15 +3489,6 @@ CREATE INDEX destroy_muc_info_nick_name_idx ON public.destroy_muc_info USING btr
 --
 
 CREATE UNIQUE INDEX fresh_empl_entering_user_id_idx ON public.fresh_empl_entering USING btree (user_id);
-
-
---
--- TOC entry 4130 (class 1259 OID 18405)
--- Name: group_extent_key_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX group_extent_key_idx ON public.group_extent USING btree (group_id, key);
-
 
 --
 -- TOC entry 4137 (class 1259 OID 18406)
@@ -5064,53 +3681,6 @@ CREATE UNIQUE INDEX i_pubsub_state_tuple ON public.pubsub_state USING btree (nod
 CREATE UNIQUE INDEX i_pubsub_subscription_opt ON public.pubsub_subscription_opt USING btree (subid, opt_name);
 
 
---
--- TOC entry 4401 (class 1259 OID 18437)
--- Name: i_rosteru_jid; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_rosteru_jid ON public.rosterusers USING btree (jid);
-
-
---
--- TOC entry 4402 (class 1259 OID 18438)
--- Name: i_rosteru_user_jid; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX i_rosteru_user_jid ON public.rosterusers USING btree (username, jid);
-
-
---
--- TOC entry 4403 (class 1259 OID 18439)
--- Name: i_rosteru_username; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_rosteru_username ON public.rosterusers USING btree (username);
-
-
---
--- TOC entry 4428 (class 1259 OID 18440)
--- Name: i_sr_user_grp; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_sr_user_grp ON public.sr_user USING btree (grp);
-
-
---
--- TOC entry 4429 (class 1259 OID 18441)
--- Name: i_sr_user_jid; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_sr_user_jid ON public.sr_user USING btree (jid);
-
-
---
--- TOC entry 4430 (class 1259 OID 18442)
--- Name: i_sr_user_jid_grp; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX i_sr_user_jid_grp ON public.sr_user USING btree (jid, grp);
-
 
 --
 -- TOC entry 4441 (class 1259 OID 18443)
@@ -5118,94 +3688,6 @@ CREATE UNIQUE INDEX i_sr_user_jid_grp ON public.sr_user USING btree (jid, grp);
 --
 
 CREATE INDEX i_user_register_mucs_user_idx ON public.user_register_mucs USING btree (username);
-
-
---
--- TOC entry 4462 (class 1259 OID 18444)
--- Name: i_vcard_search_lbday; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lbday ON public.vcard_search USING btree (lbday);
-
-
---
--- TOC entry 4463 (class 1259 OID 18445)
--- Name: i_vcard_search_lctry; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lctry ON public.vcard_search USING btree (lctry);
-
-
---
--- TOC entry 4464 (class 1259 OID 18446)
--- Name: i_vcard_search_lemail; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lemail ON public.vcard_search USING btree (lemail);
-
-
---
--- TOC entry 4465 (class 1259 OID 18447)
--- Name: i_vcard_search_lfamily; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lfamily ON public.vcard_search USING btree (lfamily);
-
-
---
--- TOC entry 4466 (class 1259 OID 18448)
--- Name: i_vcard_search_lfn; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lfn ON public.vcard_search USING btree (lfn);
-
-
---
--- TOC entry 4467 (class 1259 OID 18449)
--- Name: i_vcard_search_lgiven; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lgiven ON public.vcard_search USING btree (lgiven);
-
-
---
--- TOC entry 4468 (class 1259 OID 18450)
--- Name: i_vcard_search_llocality; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_llocality ON public.vcard_search USING btree (llocality);
-
-
---
--- TOC entry 4469 (class 1259 OID 18451)
--- Name: i_vcard_search_lmiddle; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lmiddle ON public.vcard_search USING btree (lmiddle);
-
-
---
--- TOC entry 4470 (class 1259 OID 18452)
--- Name: i_vcard_search_lnickname; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lnickname ON public.vcard_search USING btree (lnickname);
-
-
---
--- TOC entry 4471 (class 1259 OID 18453)
--- Name: i_vcard_search_lorgname; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lorgname ON public.vcard_search USING btree (lorgname);
-
-
---
--- TOC entry 4472 (class 1259 OID 18454)
--- Name: i_vcard_search_lorgunit; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX i_vcard_search_lorgunit ON public.vcard_search USING btree (lorgunit);
 
 
 --
@@ -5256,133 +3738,6 @@ CREATE INDEX index_cloud_user_time_type ON public.qcloud_main USING btree (q_use
 CREATE INDEX invite_spool_username_inviter_host_ihost_idx ON public.invite_spool USING btree (username, inviter, host, ihost);
 
 
---
--- TOC entry 4189 (class 1259 OID 18461)
--- Name: ix_mission_member_list; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX ix_mission_member_list ON public.mission_member USING btree (id, publisher);
-
-
---
--- TOC entry 4165 (class 1259 OID 18463)
--- Name: mask_history_create_time_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_create_time_idx ON public.mask_history USING btree (create_time);
-
-
---
--- TOC entry 4166 (class 1259 OID 18464)
--- Name: mask_history_create_time_m_from_m_to_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_create_time_m_from_m_to_idx ON public.mask_history USING btree (create_time, m_from, m_to);
-
-
---
--- TOC entry 4167 (class 1259 OID 18465)
--- Name: mask_history_from_host_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_from_host_idx ON public.mask_history USING btree (from_host);
-
-
---
--- TOC entry 4168 (class 1259 OID 18466)
--- Name: mask_history_id_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX mask_history_id_idx ON public.mask_history USING btree (id);
-
-
---
--- TOC entry 4169 (class 1259 OID 18467)
--- Name: mask_history_m_from_from_host_create_time_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_m_from_from_host_create_time_idx ON public.mask_history USING btree (m_from, from_host, create_time);
-
-
---
--- TOC entry 4170 (class 1259 OID 18468)
--- Name: mask_history_m_from_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_m_from_idx ON public.mask_history USING btree (m_from);
-
-
---
--- TOC entry 4171 (class 1259 OID 18469)
--- Name: mask_history_m_from_m_to_create_time_id_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX mask_history_m_from_m_to_create_time_id_idx ON public.mask_history USING btree (m_from, m_to, create_time, id);
-
-
---
--- TOC entry 4172 (class 1259 OID 18470)
--- Name: mask_history_m_from_m_to_create_time_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_m_from_m_to_create_time_idx ON public.mask_history USING btree (m_from, m_to, create_time);
-
-
---
--- TOC entry 4173 (class 1259 OID 18471)
--- Name: mask_history_m_from_m_to_from_host_to_host_create_time_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_m_from_m_to_from_host_to_host_create_time_idx ON public.mask_history USING btree (m_from, m_to, from_host, to_host, create_time);
-
-
---
--- TOC entry 4174 (class 1259 OID 18472)
--- Name: mask_history_m_from_m_to_id_create_time_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX mask_history_m_from_m_to_id_create_time_idx ON public.mask_history USING btree (m_from, m_to, id, create_time);
-
-
---
--- TOC entry 4175 (class 1259 OID 18473)
--- Name: mask_history_m_from_m_to_id_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX mask_history_m_from_m_to_id_idx ON public.mask_history USING btree (m_from, m_to, id);
-
-
---
--- TOC entry 4176 (class 1259 OID 18474)
--- Name: mask_history_m_to_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_m_to_idx ON public.mask_history USING btree (m_to);
-
-
---
--- TOC entry 4177 (class 1259 OID 18475)
--- Name: mask_history_m_to_to_host_create_time_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_m_to_to_host_create_time_idx ON public.mask_history USING btree (m_to, to_host, create_time);
-
-
---
--- TOC entry 4178 (class 1259 OID 18476)
--- Name: mask_history_msg_id_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_msg_id_idx ON public.mask_history USING btree (msg_id);
-
-
---
--- TOC entry 4179 (class 1259 OID 18477)
--- Name: mask_history_read_flag_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mask_history_read_flag_idx ON public.mask_history USING btree (read_flag);
-
 
 --
 -- TOC entry 4182 (class 1259 OID 18478)
@@ -5399,13 +3754,6 @@ CREATE INDEX meeting_info_meeting_id_idx ON public.meeting_info USING btree (mee
 
 CREATE UNIQUE INDEX meeting_info_meeting_id_inviter_member_idx ON public.meeting_info USING btree (meeting_id, inviter, member);
 
-
---
--- TOC entry 4188 (class 1259 OID 18480)
--- Name: mission_list_publisher; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX mission_list_publisher ON public.mission_list USING btree (publisher);
 
 
 --
@@ -5623,37 +3971,6 @@ CREATE INDEX msg_history_realfrom_idx ON public.msg_history USING btree (realfro
 
 CREATE INDEX msg_history_realto_idx ON public.msg_history USING btree (realto);
 
-
---
--- TOC entry 4225 (class 1259 OID 18508)
--- Name: msg_stat_reportdate_m_from_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX msg_stat_reportdate_m_from_idx ON public.msg_stat USING btree (reportdate, m_from);
-
-
---
--- TOC entry 4226 (class 1259 OID 18509)
--- Name: msg_stat_reportdate_m_from_idx1; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX msg_stat_reportdate_m_from_idx1 ON public.msg_stat USING btree (reportdate, m_from) WHERE (flag = 'p2p'::text);
-
-
---
--- TOC entry 4227 (class 1259 OID 18510)
--- Name: msg_stat_reportdate_nickname_flag_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX msg_stat_reportdate_nickname_flag_idx ON public.msg_stat USING btree (reportdate, nickname, flag);
-
-
---
--- TOC entry 4228 (class 1259 OID 18511)
--- Name: msg_stat_reportdate_nickname_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX msg_stat_reportdate_nickname_idx ON public.msg_stat USING btree (reportdate, nickname) WHERE (flag = 'muc'::text);
 
 
 --
@@ -5894,39 +4211,6 @@ CREATE INDEX muc_user_mark_index ON public.muc_user_mark USING btree (muc_name, 
 
 CREATE INDEX muc_vcard_info_muc_name_show_name_idx ON public.muc_vcard_info USING gin (muc_name public.gin_trgm_ops, show_name public.gin_trgm_ops);
 
-
---
--- TOC entry 4319 (class 1259 OID 18547)
--- Name: new_person_extent_owner_host_idx1; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX new_person_extent_owner_host_idx1 ON public.person_extent_backup_2018_01_28 USING btree (owner, host);
-
-
---
--- TOC entry 4320 (class 1259 OID 18548)
--- Name: new_person_extent_owner_host_key_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX new_person_extent_owner_host_key_idx ON public.person_extent_backup_2018_01_28 USING btree (owner, host, key);
-
-
---
--- TOC entry 4321 (class 1259 OID 18549)
--- Name: new_person_extent_owner_key_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX new_person_extent_owner_key_idx ON public.person_extent_backup_2018_01_28 USING btree (owner, key);
-
-
---
--- TOC entry 4294 (class 1259 OID 18550)
--- Name: non_human_nickname_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX non_human_nickname_idx ON public.non_human USING btree (nickname);
-
-
 --
 -- TOC entry 4295 (class 1259 OID 18551)
 -- Name: notice_history_create_time_idx; Type: INDEX; Schema: public; Owner: ejabberd
@@ -5957,93 +4241,6 @@ CREATE INDEX notice_history_m_from_create_time_idx ON public.notice_history USIN
 --
 
 CREATE INDEX notice_history_m_from_idx ON public.notice_history USING btree (m_from);
-
-
---
--- TOC entry 4306 (class 1259 OID 18555)
--- Name: person_extent_2017_09_22_owner_key_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX person_extent_2017_09_22_owner_key_idx ON public.person_extent_2017_09_22 USING btree (owner, key);
-
-
---
--- TOC entry 4309 (class 1259 OID 18556)
--- Name: person_extent_2018_05_02_owner_host_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX person_extent_2018_05_02_owner_host_idx ON public.person_extent_2018_05_02 USING btree (owner, host);
-
-
---
--- TOC entry 4310 (class 1259 OID 18557)
--- Name: person_extent_2018_05_02_owner_host_key_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX person_extent_2018_05_02_owner_host_key_idx ON public.person_extent_2018_05_02 USING btree (owner, host, key);
-
-
---
--- TOC entry 4311 (class 1259 OID 18558)
--- Name: person_extent_2018_05_02_owner_key_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX person_extent_2018_05_02_owner_key_idx ON public.person_extent_2018_05_02 USING btree (owner, key);
-
-
---
--- TOC entry 4314 (class 1259 OID 18559)
--- Name: person_extent_2018_07_12_owner_host_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX person_extent_2018_07_12_owner_host_idx ON public.person_extent_2018_07_12 USING btree (owner, host);
-
-
---
--- TOC entry 4315 (class 1259 OID 18560)
--- Name: person_extent_2018_07_12_owner_host_key_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX person_extent_2018_07_12_owner_host_key_idx ON public.person_extent_2018_07_12 USING btree (owner, host, key);
-
-
---
--- TOC entry 4316 (class 1259 OID 18561)
--- Name: person_extent_2018_07_12_owner_key_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX person_extent_2018_07_12_owner_key_idx ON public.person_extent_2018_07_12 USING btree (owner, key);
-
-
---
--- TOC entry 4301 (class 1259 OID 18562)
--- Name: person_extent_owner_host_idx1; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX person_extent_owner_host_idx1 ON public.person_extent USING btree (owner, host);
-
-
---
--- TOC entry 4302 (class 1259 OID 18563)
--- Name: person_extent_owner_host_key_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX person_extent_owner_host_key_idx ON public.person_extent USING btree (owner, host, key);
-
-
---
--- TOC entry 4303 (class 1259 OID 18564)
--- Name: person_extent_owner_key_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX person_extent_owner_key_idx ON public.person_extent USING btree (owner, key);
-
---
--- TOC entry 4400 (class 1259 OID 18567)
--- Name: pk_rosterg_user_jid; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX pk_rosterg_user_jid ON public.rostergroups USING btree (username, jid);
 
 
 --
@@ -6143,14 +4340,6 @@ CREATE UNIQUE INDEX revoke_msg_history_msg_id_idx1 ON public.revoke_msg_history 
 
 
 --
--- TOC entry 4384 (class 1259 OID 18580)
--- Name: robot_info_cn_name_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX robot_info_cn_name_idx ON public.robot_info USING btree (cn_name);
-
-
---
 -- TOC entry 4406 (class 1259 OID 18581)
 -- Name: scheduling_info_begin_time_end_time_member_idx; Type: INDEX; Schema: public; Owner: postgres
 --
@@ -6205,15 +4394,6 @@ CREATE INDEX scheduling_info_scheduling_id_member_idx ON public.scheduling_info 
 
 CREATE INDEX scheduling_info_update_time_member_idx ON public.scheduling_info USING btree (update_time, member);
 
-
---
--- TOC entry 4432 (class 1259 OID 18593)
--- Name: user_block_list_username_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX user_block_list_username_idx ON public.user_block_list USING btree (username);
-
-
 --
 -- TOC entry 4437 (class 1259 OID 18594)
 -- Name: user_friends_username_userhost_friend_host_idx; Type: INDEX; Schema: public; Owner: ejabberd
@@ -6221,13 +4401,6 @@ CREATE INDEX user_block_list_username_idx ON public.user_block_list USING btree 
 
 CREATE UNIQUE INDEX user_friends_username_userhost_friend_host_idx ON public.user_friends USING btree (username, userhost, friend, host);
 
-
---
--- TOC entry 4393 (class 1259 OID 18595)
--- Name: user_name_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX user_name_idx ON public.users USING btree (name);
 
 
 --
@@ -6324,30 +4497,6 @@ CREATE INDEX user_register_mucs_username_host_registed_flag_idx1 ON public.user_
 --
 
 CREATE INDEX user_register_mucs_username_registed_flag_domain_idx ON public.user_register_mucs USING btree (username, registed_flag, domain);
-
-
---
--- TOC entry 4394 (class 1259 OID 18608)
--- Name: users_name_hire_flag_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE INDEX users_name_hire_flag_idx ON public.users USING btree (name, hire_flag);
-
-
---
--- TOC entry 4397 (class 1259 OID 18609)
--- Name: users_username_idx; Type: INDEX; Schema: public; Owner: ejabberd
---
-
-CREATE UNIQUE INDEX users_username_idx ON public.users USING btree (username);
-
-
---
--- TOC entry 4480 (class 1259 OID 18610)
--- Name: vcard_version_test_username_host_idx; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX vcard_version_test_username_host_idx ON public.vcard_version_test USING btree (username, host);
 
 
 --
@@ -8533,34 +6682,6 @@ REVOKE ALL ON SEQUENCE public.host_users_id_seq FROM postgres;
 
 REVOKE ALL ON TABLE public.msg_history_backup FROM postgres;
 
-
---
--- TOC entry 4938 (class 0 OID 0)
--- Dependencies: 249
--- Name: TABLE msg_history_view; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.msg_history_view FROM postgres;
-
-
---
--- TOC entry 4939 (class 0 OID 0)
--- Dependencies: 250
--- Name: TABLE msg_stat; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.msg_stat FROM postgres;
-
-
---
--- TOC entry 4941 (class 0 OID 0)
--- Dependencies: 251
--- Name: SEQUENCE msg_stat_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON SEQUENCE public.msg_stat_id_seq FROM postgres;
-
-
 --
 -- TOC entry 4942 (class 0 OID 0)
 -- Dependencies: 259
@@ -8568,42 +6689,6 @@ REVOKE ALL ON SEQUENCE public.msg_stat_id_seq FROM postgres;
 --
 
 REVOKE ALL ON TABLE public.muc_room_history_backup FROM postgres;
-
-
---
--- TOC entry 4947 (class 0 OID 0)
--- Dependencies: 271
--- Name: TABLE non_human; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.non_human FROM postgres;
-
-
---
--- TOC entry 4949 (class 0 OID 0)
--- Dependencies: 272
--- Name: SEQUENCE non_human_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON SEQUENCE public.non_human_id_seq FROM postgres;
-
-
---
--- TOC entry 4951 (class 0 OID 0)
--- Dependencies: 276
--- Name: TABLE person_extent_2017_09_22; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.person_extent_2017_09_22 FROM postgres;
-
-
---
--- TOC entry 4952 (class 0 OID 0)
--- Dependencies: 278
--- Name: TABLE person_extent_2018_07_12; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.person_extent_2018_07_12 FROM postgres;
 
 
 --
@@ -8697,15 +6782,6 @@ REVOKE ALL ON TABLE public.revoke_msg_history_backup FROM postgres;
 
 
 --
--- TOC entry 5018 (class 0 OID 0)
--- Dependencies: 314
--- Name: TABLE robot_pubsub_test; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.robot_pubsub_test FROM postgres;
-
-
---
 -- TOC entry 5040 (class 0 OID 0)
 -- Dependencies: 321
 -- Name: TABLE scheduling_info; Type: ACL; Schema: public; Owner: postgres
@@ -8721,24 +6797,6 @@ REVOKE ALL ON TABLE public.scheduling_info FROM postgres;
 --
 
 REVOKE ALL ON SEQUENCE public.scheduling_info_id_seq FROM postgres;
-
-
---
--- TOC entry 5048 (class 0 OID 0)
--- Dependencies: 346
--- Name: SEQUENCE vcard_version_test_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON SEQUENCE public.vcard_version_test_id_seq FROM postgres;
-
-
---
--- TOC entry 5049 (class 0 OID 0)
--- Dependencies: 347
--- Name: TABLE vcard_version_test; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE public.vcard_version_test FROM postgres;
 
 
 --

@@ -3049,21 +3049,26 @@ find_changed_items(UJID, UAffiliation, URole,
 		   [#xmlel{name = <<"item">>, attrs = Attrs} = Item
 		    | Items],
 		   Lang, StateData, Res) ->
-    TJID = case fxml:get_attr(<<"real_jid">>, Attrs) of
-	     {value, S} ->
-		 case jid:from_string(S) of
-		   error ->
-		       ErrText = iolist_to_binary(
+    Jid = case fxml:get_attr(<<"read_jid">>, Attrs) of
+        false -> fxml:get_attr(<<"real_jid">>, Attrs);
+        O -> O
+    end,
+
+    TJID = case Jid of
+             {value, S} ->
+                 case jid:from_string(S) of
+                   error ->
+                       ErrText = iolist_to_binary(
                                    io_lib:format(translate:translate(
                                                    Lang,
                                                    <<"Jabber ID ~s is invalid">>),
                                                  [S])),
-		       {error, ?ERRT_NOT_ACCEPTABLE(Lang, ErrText)};
-		   J -> check_Attrs_JID(J#jid.luser,J#jid.lserver,Attrs,StateData), {value, [J]}
-		 end;
-	     _ ->
-		   Txt1 = <<"No 'jid' attribute found">>,
-		   {error, ?ERRT_BAD_REQUEST(Lang, Txt1)}
+                       {error, ?ERRT_NOT_ACCEPTABLE(Lang, ErrText)};
+                   J -> check_Attrs_JID(J#jid.luser,J#jid.lserver,Attrs,StateData), {value, [J]}
+                 end;
+             _ ->
+                   Txt1 = <<"No 'jid' attribute found">>,
+                   {error, ?ERRT_BAD_REQUEST(Lang, Txt1)}
     end,
     case TJID of
       {value, [JID | _] = JIDs} ->
