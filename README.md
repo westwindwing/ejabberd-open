@@ -93,7 +93,7 @@ redis: 6379
 + redis密码是：123456，服务地址是：127.0.0.1
 + 数据库初始化sql在doc目录下
 + 保证可访问主机的：5222、5202、8080端口（关掉防火墙：sudo systemctl stop firewalld.service）
-+ IM服务的域名是:qtalk.test.org
++ IM服务的域名是:qtalk.test.org(大家安装线上之前，最好确定好这个值，一旦定了，之后修改的成本就很高，可以参考[domain修改](https://github.com/qunarcorp/ejabberd-open/wiki/host%E4%BF%AE%E6%94%B9)来修改)
 + tls证书：默认安装用的是一个测试证书，线上使用，请更换/startalk/ejabberd/etc/ejabberd/server.pem文件，生成方法见[securing-ejabberd-with-tls-encryption](https://blog.process-one.net/securing-ejabberd-with-tls-encryption/)
 + 出现文件覆盖提示时，输入yes敲回车即可
 + 安装文档中#开头输入的命令表示root执行的，$开头的命令表示普通用户
