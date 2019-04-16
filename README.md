@@ -28,10 +28,6 @@ IM负载均衡组件，负责验证客户端身份，以及转发http请求到�
 
 IM HTTP接口服务，负责IM相关数据的查询、设置以及历史消息同步(基于tomcat的java服务)
 
-+ [qtalk_cowboy](https://github.com/qunarcorp/qtalk_cowboy_open)(后面所有的接口都会迁移到im_http_service，这个服务会废弃)
-
-IM HTTP接口服务，负责IM相关数据的查询、设置以及历史消息同步，后面会全部迁移到im_http_service上
-
 + [qfproxy](https://github.com/qunarcorp/qfproxy_open)
 
 IM文件服务，负责文件的上传和下载(基于tomcat的java服务)
@@ -70,7 +66,6 @@ im_http_service服务：8005 8009 8081
 qfproxy服务：8006 8010 8082
 push_service服务：8007 8011 8083
 qtalk_search服务：8888
-qtalk_cowboy_server服务：10056
 
 im服务： 5222 5202 10050
 
@@ -152,7 +147,6 @@ $ mkdir /startalk/download
 $ cd /startalk/download
 $ git clone https://github.com/qunarcorp/ejabberd-open.git
 $ git clone https://github.com/qunarcorp/or_open.git
-$ git clone https://github.com/qunarcorp/qtalk_cowboy_open.git
 $ git clone https://github.com/qunarcorp/qtalk_search.git
 
 $ cp ejabberd-open/doc/qtalk.sql /startalk/
@@ -333,24 +327,6 @@ $ ./sbin/ejabberdctl start
 确认ejabberd安装成功
 $ ps -ef | grep 's ejabberd'
 startalk 23515     1  4 09:58 ?        00:00:03 /startalk/erlang1903/lib/erlang/erts-8.3/bin/beam.smp -K true -P 250000 -- -root /startalk/erlang1903/lib/erlang -progname erl -- -home /home/startalk -- -name ejabberd@startalk.com -noshell -noinput -noshell -noinput -mnesia dir "/startalk/ejabberd/var/lib/ejabberd" -ejabberd log_rate_limit 20000 log_rotate_size 504857600 log_rotate_count 41 log_rotate_date "$D0" -s ejabberd -smp auto start
-```
-
-### 安装qtalk_cowboy
-
-```
-$ cd /startalk/download
-$ cp -rf qtalk_cowboy_open /startalk/qtalk_cowboy
-$ cd /startalk/qtalk_cowboy/
-$ ./rebar compile
-
-启动qtalk_cowboy
-$ ./bin/ejb_http_server start
-停止qtalk_cowboy
-$ ./bin/ejb_http_server stop
-
-确认qtalk_cowboy服务启动成功
-$ ps -ef | grep ejb_http_server
-startalk 23644     1  4 10:01 ?        00:00:00 /home/work/erlang1903/lib/erlang/erts-8.3/bin/beam.smp -- -root /home/work/erlang1903/lib/erlang -progname erl -- -home /home/startalk -- -name ejb_http_server@startalk.com -noshell -noinput -pa ./ebin -pa ./deps/cowboy/ebin ./deps/cowlib/ebin ./deps/eredis/ebin ./deps/goldrush/ebin ./deps/lager/ebin ./deps/p1_pgsql/ebin ./deps/ranch/ebin ./deps/recon/ebin ./deps/rfc4627_jsonrpc/ebin -s ejb_http_server -smp enable -hidden -config ./config/lager -config ./config/ejb_http_server
 ```
 
 ### 安装java服务(/startalk/download/or_open/deps/tomcat/下的是打好包的三个java服务，自己也可以使用源码打包，然后自己部署)
