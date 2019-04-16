@@ -70,8 +70,8 @@ port_stat() ->
 msg_queue_stat() ->
     [{Pid, MsgNum, Attr}] = recon:proc_count(message_queue_len, 1),
 
-    ?ERROR_MSG("the process(~p) message_queue num is ~p, and the attr is ~p, the messages is ~p~n", [Pid, MsgNum, Attr, erlang:process_info(Pid, messages)]),
-    ?ERROR_MSG("the process(~p) current_stacktrace is ~p~n", [Pid, erlang:process_info(Pid, current_stacktrace)]),
+    ?DEBUG("the process(~p) message_queue num is ~p, and the attr is ~p, the messages is ~p~n", [Pid, MsgNum, Attr, erlang:process_info(Pid, messages)]),
+    ?DEBUG("the process(~p) current_stacktrace is ~p~n", [Pid, erlang:process_info(Pid, current_stacktrace)]),
     [{<<"max_msg_queue">>, MsgNum}].
 
 memory_stat() ->
