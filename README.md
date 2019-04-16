@@ -429,7 +429,7 @@ $ sudo nohup python3.6 search.py 1>/dev/null 2>/dev/null &
 
 客户端配置导航地址：[http://ip:8080/newapi/nck/qtalk_nav.qunar](http://ip:8080/newapi/nck/qtalk_nav.qunar)，使用账号：test，密码：testpassword登陆(将ip替换成自己服务器的ip)
 
-客户端配置导航的说明[配置导航](https://im.qunar.com/new/#/platform/access_guide/manage_nav?id=manage_nav_mb)
+客户端配置导航的说明[配置导航](https://im.qunar.com/#/platform/access_guide/config_navs?id=config_navs)
 
 可以在二维码生成网站[http://www.liantu.com/](http://www.liantu.com/)生成导航地址的二维码，然后通过扫码在手机客户端添加导航
 
