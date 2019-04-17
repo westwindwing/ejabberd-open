@@ -95,7 +95,7 @@ redis: 6379
 
 ### 依赖包
 ```
-# yum install epel-release
+# yum -y install epel-release
 # yum -y update
 # yum -y groupinstall Base "Development Tools" "Perl Support"
 # yum -y install openssl openssl-devel unixODBC unixODBC-devel pkgconfig libSM libSM-devel libxslt ncurses-devel libyaml libyaml-devel expat expat-devel libxml2-devel libxml2 java-1.8.0-openjdk  java-1.8.0-openjdk-devel  pam-devel pcre-devel gd-devel bzip2-devel zlib-devel libicu-devel libwebp-devel gmp-devel curl-devel postgresql-devel libtidy libtidy-devel recode aspell libmcrypt  libmemcached gd readline-devel libxslt-devel vim
