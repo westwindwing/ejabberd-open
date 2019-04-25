@@ -418,8 +418,9 @@ $ sudo nohup python3.6 search.py 1>/dev/null 2>/dev/null &
 * master(主干分支)
 * release(用于合并到master的准发布分支)
 * develop(当前开发分支)
-* v1.0(1.0版本的分支，当前最新稳定分支)
-* v1.1(1.1分支版本，支持Erlang/OTP 21.2)
+* v1.0(1.0版本的分支)
+* v1.1(1.1版本的分支，当前最新稳定分支)
+* v2.0(2.0分支版本，支持Erlang/OTP 21.2)
 
 
 大家提交pull request的时候，可以根据不同分支的功能，合并到不同的分支
