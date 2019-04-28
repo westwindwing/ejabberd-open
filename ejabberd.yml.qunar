@@ -111,33 +111,6 @@ route_subdomains: s2s
 ## by and what options to start it with.
 ##
 listen: 
-  - 
-    port: 5222
-    module: ejabberd_c2s
-    certfile: "/startalk/ejabberd/etc/ejabberd/server.pem"
-    starttls: true
-    #starttls: true
-    ##
-    ## If TLS is compiled in and you installed a SSL
-    ## certificate, specify the full path to the
-    ## file and uncomment these lines:
-    ##
-    ## certfile: "/path/to/ssl.pem"
-    ## starttls: true
-    ##
-    ## To enforce TLS encryption for client connections,
-    ## use this instead of the "starttls" option:
-    ##
-    ## starttls_required: true
-    ##
-    ## Custom OpenSSL options
-    ##
-    ## protocol_options:
-    ##   - "no_sslv3"
-    ##   - "no_tlsv1"
-    max_stanza_size: 65536
-    shaper: c2s_shaper
-    access: c2s
   -
     port: 5202
     certfile: "/startalk/ejabberd/etc/ejabberd/server.pem"
