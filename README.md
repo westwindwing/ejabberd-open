@@ -67,7 +67,7 @@ qfproxy服务：8006 8010 8082
 push_service服务：8007 8011 8083
 qtalk_search服务：8888
 
-im服务： 5222 5202 10050
+im服务： 5202 10050
 
 db: 5432 
 
@@ -87,7 +87,7 @@ redis: 6379
 + 数据库用户名密码是ejabberd:123456，服务地址是：127.0.0.1
 + redis密码是：123456，服务地址是：127.0.0.1
 + 数据库初始化sql在doc目录下
-+ 保证可访问主机的：5222、5202、8080端口（关掉防火墙：sudo systemctl stop firewalld.service）
++ 保证可访问主机的：5202、8080端口（关掉防火墙：sudo systemctl stop firewalld.service）
 + IM服务的域名是:qtalk.test.org(大家安装线上之前，最好确定好这个值，一旦定了，之后修改的成本就很高，可以参考[domain修改](https://github.com/qunarcorp/ejabberd-open/wiki/host%E4%BF%AE%E6%94%B9)来修改)
 + tls证书：默认安装用的是一个测试证书，线上使用，请更换/startalk/ejabberd/etc/ejabberd/server.pem文件，生成方法见[securing-ejabberd-with-tls-encryption](https://blog.process-one.net/securing-ejabberd-with-tls-encryption/)
 + 出现文件覆盖提示时，输入yes敲回车即可
@@ -156,7 +156,7 @@ $ chmod 777 /startalk/qtalk.sql
 ### 检测端口使用：
 
 ```
-# sudo netstat -antlp | egrep "8080|8005|8009|8081|8006|8010|8082|8007|8011|8083|8888|10056|5222|5202|10050|5280|6379"
+# sudo netstat -antlp | egrep "8080|8005|8009|8081|8006|8010|8082|8007|8011|8083|8888|10056|5202|10050|5280|6379"
 若没有任何输出，怎表明没有程序占用startalk使用的端口，否则需要关闭已经在使用端口的程序
 ```
 
