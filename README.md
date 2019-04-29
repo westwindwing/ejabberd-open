@@ -336,8 +336,12 @@ $ cd /startalk/download/
 $ cp -rf or_open/deps/tomcat /startalk/
 $ cd /startalk/tomcat
 
-修改导航地址：
+修改导航地址和扩展键盘：
 $  vim /startalk/tomcat/im_http_service/webapps/im_http_service/WEB-INF/classes/nav.json
+$  vim /startalk/tomcat/im_http_service/webapps/im_http_service/WEB-INF/classes/androidqtalk.json
+$  vim /startalk/tomcat/im_http_service/webapps/im_http_service/WEB-INF/classes/androidstartalk.json
+$  vim /startalk/tomcat/im_http_service/webapps/im_http_service/WEB-INF/classes/iosqtalk.json
+$  vim /startalk/tomcat/im_http_service/webapps/im_http_service/WEB-INF/classes/iosstartalk.json
 
 将ip替换成对应机器的ip地址
 
