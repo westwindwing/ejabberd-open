@@ -6951,7 +6951,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 --
 -- 
 --
-create table find_application_table
+create table public.find_application_table
 (
     id                  serial              not null
         constraint find_application_table_pk
@@ -6987,78 +6987,78 @@ create table find_application_table
     app_uuid            varchar(50)
 );
 
-comment on column find_application_table.id is '自增id';
+comment on column public.find_application_table.id is '自增id';
 
-comment on column find_application_table.application_type is '应用类型，2RN应用，3 H5应用';
+comment on column public.find_application_table.application_type is '应用类型，2RN应用，3 H5应用';
 
-comment on column find_application_table.visible_range is '可见性范围，空标识全员可见';
+comment on column public.find_application_table.visible_range is '可见性范围，空标识全员可见';
 
-comment on column find_application_table.application_name is '应用名称';
+comment on column public.find_application_table.application_name is '应用名称';
 
-comment on column find_application_table.application_class is '应用分类';
+comment on column public.find_application_table.application_class is '应用分类';
 
-comment on column find_application_table.application_icon is '应用图标';
+comment on column public.find_application_table.application_icon is '应用图标';
 
-comment on column find_application_table.application_version is '应用版本号';
+comment on column public.find_application_table.application_version is '应用版本号';
 
-comment on column find_application_table.ios_version is 'ios版本号';
+comment on column public.find_application_table.ios_version is 'ios版本号';
 
-comment on column find_application_table.android_version is '安卓版本号';
+comment on column public.find_application_table.android_version is '安卓版本号';
 
-comment on column find_application_table.ios_bundle is 'iosbundle包，h5应用的话对应的是h5的地址';
+comment on column public.find_application_table.ios_bundle is 'iosbundle包，h5应用的话对应的是h5的地址';
 
-comment on column find_application_table.android_bundle is 'android的bundle包，h5应用对应的是地址';
+comment on column public.find_application_table.android_bundle is 'android的bundle包，h5应用对应的是地址';
 
-comment on column find_application_table.application_desc is '应用描述';
+comment on column public.find_application_table.application_desc is '应用描述';
 
-comment on column find_application_table.create_time is '创建时间';
+comment on column public.find_application_table.create_time is '创建时间';
 
-comment on column find_application_table.update_time is '更新时间';
+comment on column public.find_application_table.update_time is '更新时间';
 
-comment on column find_application_table.disable_flag is '禁用标志位';
+comment on column public.find_application_table.disable_flag is '禁用标志位';
 
-comment on column find_application_table.member_id is '在群组的id';
+comment on column public.find_application_table.member_id is '在群组的id';
 
-comment on column find_application_table.h5_action is 'h5页面地址';
+comment on column public.find_application_table.h5_action is 'h5页面地址';
 
-comment on column find_application_table.entrance is 'RN应用的入口地址';
+comment on column public.find_application_table.entrance is 'RN应用的入口地址';
 
-comment on column find_application_table.properties is '额外初始属性 map的json';
+comment on column public.find_application_table.properties is '额外初始属性 map的json';
 
-comment on column find_application_table.module is 'RN应用的程序入口';
+comment on column public.find_application_table.module is 'RN应用的程序入口';
 
-comment on column find_application_table.show_native_nav is '是否显示导航';
+comment on column public.find_application_table.show_native_nav is '是否显示导航';
 
-comment on column find_application_table.nav_title is '导航title h5应用不生效';
+comment on column public.find_application_table.nav_title is '导航title h5应用不生效';
 
-comment on column find_application_table.valid_platform is '可适配的客户端类型，IOS Angroid PC';
+comment on column public.find_application_table.valid_platform is '可适配的客户端类型，IOS Angroid PC';
 
-comment on column find_application_table.visible_platform is 'ios|Android|pc(101):5';
+comment on column public.find_application_table.visible_platform is 'ios|Android|pc(101):5';
 
-comment on column find_application_table.bundle_name is 'bundle 包的文件名 不同于applicaName';
+comment on column public.find_application_table.bundle_name is 'bundle 包的文件名 不同于applicaName';
 
-comment on column find_application_table.h5_action_ios is 'ios h5的页面地址';
+comment on column public.find_application_table.h5_action_ios is 'ios h5的页面地址';
 
-comment on column find_application_table.h5_action_android is 'h5 android页面地址';
+comment on column public.find_application_table.h5_action_android is 'h5 android页面地址';
 
-comment on column find_application_table.delete_flag is '删除标记位，1删除 0未删除';
+comment on column public.find_application_table.delete_flag is '删除标记位，1删除 0未删除';
 
-comment on column find_application_table.native_flag is '原生应用标记0是自定义，1是原生应用禁止修改';
+comment on column public.find_application_table.native_flag is '原生应用标记0是自定义，1是原生应用禁止修改';
 
-comment on column find_application_table.app_uuid is '应用的UUID';
+comment on column public.find_application_table.app_uuid is '应用的UUID';
 
-alter table find_application_table
+alter table public.find_application_table
     owner to ejabberd;
 
 create unique index find_application_table_id_uindex
-    on find_application_table (id);
+    on public.find_application_table (id);
 
 create index find_application_table_application_name_index
-    on find_application_table (application_name);
+    on public.find_application_table (application_name);
 
 
 
-create table find_class_table
+create table public.find_class_table
 (
     id         serial       not null
         constraint find_class_table_pk
@@ -7067,19 +7067,19 @@ create table find_class_table
     group_icon varchar(200) not null
 );
 
-comment on table find_class_table is '应用分类表';
+comment on table public.find_class_table is '应用分类表';
 
-comment on column find_class_table.id is '自增ID';
+comment on column public.find_class_table.id is '自增ID';
 
-comment on column find_class_table.group_name is '分组名称';
+comment on column public.find_class_table.group_name is '分组名称';
 
-comment on column find_class_table.group_icon is '分组封面';
+comment on column public.find_class_table.group_icon is '分组封面';
 
-alter table find_class_table
+alter table public.find_class_table
     owner to ejabberd;
 
 create unique index find_class_table_group_name_uindex
-    on find_class_table (group_name);
+    on public.find_class_table (group_name);
 
 create unique index find_class_table_id_uindex
-    on find_class_table (id);
+    on public.find_class_table (id);
