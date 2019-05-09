@@ -5746,8 +5746,8 @@ check_Attrs_JID(User,Domain,Attrs,StateData) ->
             case jlib:make_jid(User,Domain,<<"">>) of
             error -> {error, ?ERR_NOT_ALLOWED};
             JID ->
-                catch qtalk_muc:del_muc_room_users(StateData#state.server_host,StateData#state.room,StateData#state.host,User,Domain),
-                catch send_muc_del_registed_presence(JID,StateData),
+                %catch qtalk_muc:del_muc_room_users(StateData#state.server_host,StateData#state.room,StateData#state.host,User,Domain),
+                %catch send_muc_del_registed_presence(JID,StateData),
                 {value, [JID]}
             end;
         _ -> {error, ?ERR_NOT_ALLOWED}
