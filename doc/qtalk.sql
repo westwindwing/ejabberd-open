@@ -6953,9 +6953,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 --
 create table public.find_application_table
 (
-    id                  serial              not null
-        constraint find_application_table_pk
-            primary key,
+    id serial not null constraint find_application_table_pk primary key,
     application_type    integer             not null,
     visible_range       text,
     application_name    text                not null,
@@ -7047,22 +7045,17 @@ comment on column public.find_application_table.native_flag is '原生应用标�
 
 comment on column public.find_application_table.app_uuid is '应用的UUID';
 
-alter table public.find_application_table
-    owner to ejabberd;
+alter table public.find_application_table owner to ejabberd;
 
-create unique index find_application_table_id_uindex
-    on public.find_application_table (id);
+create unique index find_application_table_id_uindex on public.find_application_table (id);
 
-create index find_application_table_application_name_index
-    on public.find_application_table (application_name);
+create index find_application_table_application_name_index on public.find_application_table (application_name);
 
 
 
 create table public.find_class_table
 (
-    id         serial       not null
-        constraint find_class_table_pk
-            primary key,
+    id serial not null constraint find_class_table_pk primary key,
     group_name varchar(200) not null,
     group_icon varchar(200) not null
 );
@@ -7075,11 +7068,8 @@ comment on column public.find_class_table.group_name is '分组名称';
 
 comment on column public.find_class_table.group_icon is '分组封面';
 
-alter table public.find_class_table
-    owner to ejabberd;
+alter table public.find_class_table owner to ejabberd;
 
-create unique index find_class_table_group_name_uindex
-    on public.find_class_table (group_name);
+create unique index find_class_table_group_name_uindex on public.find_class_table (group_name);
 
-create unique index find_class_table_id_uindex
-    on public.find_class_table (id);
+create unique index find_class_table_id_uindex on public.find_class_table (id);
