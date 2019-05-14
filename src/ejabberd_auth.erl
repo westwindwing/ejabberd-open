@@ -45,7 +45,6 @@
 	 store_type/1, entropy/1]).
 
 -export([auth_modules/1, opt_type/1]).
--export([check_wlan_password_with_authmodule/3]).
 
 -include("ejabberd.hrl").
 -include("logger.hrl").
@@ -456,22 +455,3 @@ opt_type(auth_method) ->
 	(V) -> [ejabberd_config:v_db(?MODULE, V)]
     end;
 opt_type(_) -> [auth_method].
-
-
-check_wlan_password_with_authmodule(User, Server,
-                   Password) ->
-    check_wlan_password_loop(auth_modules(Server),
-            [User, Server, Password]).
-
-check_wlan_password_loop([], _Args) -> false;
-check_wlan_password_loop([AuthModule | AuthModules], Args) ->
-    case apply(AuthModule, check_wlan_password, Args) of
-      true ->
-  %          MacKey = get_machine_key(Args),
-            {true, AuthModule};
-      <<"out_of_date">> -> { <<"out_of_date">> };
-      {false, Reason} -> {false, Reason};
-      false -> check_wlan_password_loop(AuthModules, Args)
-    end.
-
-
