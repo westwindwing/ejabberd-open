@@ -512,7 +512,7 @@ check_serial_number() ->
         {ok, undefined} ->
             SerialNum = ejabberd_config:get_option(serial, fun(Serial)-> Serial end, undefined),
             case do_check_serial_number(SerialNum) of
-                true -> redis_link:expire_time(15, Key, SerialNum, 10800), true;
+                true -> redis_link:str_setex(15, 10800, Key, SerialNum), true;
                 false -> false
             end; 
         _ -> true
