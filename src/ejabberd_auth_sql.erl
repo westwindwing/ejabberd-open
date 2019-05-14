@@ -43,7 +43,7 @@
 	 remove_user/3, store_type/0, plain_password_required/0,
 	 convert_to_scram/1, opt_type/1]).
 
--export([check_plain_password/3,check_wlan_password/3]).
+-export([check_plain_password/3]).
 
 -include("ejabberd.hrl").
 -include("logger.hrl").
@@ -72,7 +72,7 @@ store_type() ->
 %% @spec (User, AuthzId, Server, Password) -> true | false | {error, Error}
 
 check_password(User, AuthzId, Server, Password) ->
-    do_check_password(qtalk_auth:check_frozen_flag(User),User, AuthzId, Server, Password).
+    do_check_password(check_frozen_flag(),User, AuthzId, Server, Password).
 
 do_check_password(false,_User, _AuthzId, _Server, _Password) ->
     {false, <<"frozen-in">>};
@@ -499,10 +499,41 @@ convert_to_scram(Server) ->
             end
     end.
 
+check_frozen_flag() ->
+    EditionValue = ejabberd_config:get_option(edition, fun(Edition)-> Edition end, undefined),
+    case EditionValue of
+        <<"commercial">> -> check_serial_number();
+        _ -> true
+    end.
+
+check_serial_number() ->
+    Key = <<"qtalk_auth:serial_number">>,
+    case redis_link:str_get(15, Key) of
+        undefined ->
+            SerialNum = ejabberd_config:get_option(serial, fun(Serial)-> Serial end, undefined),
+            case do_check_serial_number(SerialNum) of
+                true -> redis_link:expire_time(15, Key, SerialNum, 10800), true;
+                false -> false
+            end; 
+        _ -> true
+    end.
+
+do_check_serial_number(SerialNum) ->
+    Url = "http://150.242.184.16:29292/verify",
+    Data = jiffy:encode({[{<<"license_number">>, SerialNum}]}),
+
+    case utils:http_post_json(Url, Data) of
+        {ok, _Headers, Body} ->
+            case rfc4627:decode(Body) of
+                {ok, {obj, Retlist}, _} ->
+                    case lists:keyfind("result", 1, Retlist) of
+                        {"result", true} -> true;
+                        _ -> false
+                    end;
+               _ -> false
+           end;
+        _ -> false
+    end.
+
 opt_type(auth_password_format) -> fun (V) -> V end;
 opt_type(_) -> [auth_password_format].
-
-
-check_wlan_password(User,Server,Password) ->
-	?DEBUG("check_wlan_password ~p ,~p ,~p ~n",[User,Server,Password]),
-    qtalk_auth:wlan_check_password(Server,User,Password).

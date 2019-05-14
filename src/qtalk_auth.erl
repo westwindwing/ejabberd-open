@@ -6,10 +6,7 @@
 
 -module(qtalk_auth).
 
--export([wlan_check_password/3,check_frozen_flag/1]).
--export([kick_token_login_user/2]).
 -export([check_user_password/3]).
--export([do_md5/1]).
 
 -include("ejabberd.hrl").
 -include("logger.hrl").
@@ -47,41 +44,6 @@ do_check_host_user(_, _, _) -> false.
 
 do_md5(S) ->
      p1_sha:to_hexlist(erlang:md5(S)).
-%%--------------------------------------------------------------------
-%%%% @date 2017-03-01
-%%%%% WLAN 密码验证
-%%%%%--------------------------------------------------------------------
-
-wlan_check_password(_Server, _User, _Pass) ->
-    true.
-
-%%--------------------------------------------------------------------
-%%%% @date 2017-03-01
-%%%%% 黑名单检查
-%%%%%--------------------------------------------------------------------
-check_frozen_flag(_User) ->
-    true.
-
-kick_token_login_user(Username,Server) ->
-    case ejabberd_sm:get_user_present_resources_and_pid(Username, Server) of
-    [] ->
-        ok;
-    Resources ->
-        lists:foreach(
-            fun({_,Resource,PID}) ->
-                case str:str(Resource,<<"Android">>) =:= 0 andalso str:str(Resource,<<"iPhone">>) =:= 0 of
-                false ->
-                    if is_pid(PID) ->
-                        ?ERROR_MSG("kick user ~p~n", [{Username, Resource}]),
-                        PID ! kick;
-                    true ->
-                        ok
-                    end;
-               true ->
-                    ok
-                end
-            end, Resources)
-    end.
 
 set_user_mac_key(Server,User,Key) ->
     UTkey = str:concat(User,<<"_tkey">>),
