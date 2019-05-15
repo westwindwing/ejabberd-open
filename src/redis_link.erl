@@ -59,7 +59,7 @@ handle_call({ttlkey,Key},_From,State) ->
     Ret =  eredis:q(State#state.redis_pid, ["TTL", Key],1000),
     {reply,Ret,State};
 handle_call({strsetex,Key,Time,Val},_From,State) ->
-    Ret =  eredis:q(State#state.redis_pid, ["SETEX",Time, Key, Val],1000),
+    Ret =  eredis:q(State#state.redis_pid, ["SETEX",Key, Time, Val],1000),
     {reply,Ret,State};
 handle_call({expiretime,Key,Time},_From,State) ->
     Ret =  eredis:q(State#state.redis_pid, ["EXPIRE", Key, Time],1000),
@@ -135,7 +135,7 @@ str_set(Host,Tab,Key,Str) ->
 str_setex(Tab,Time,Key,Str) ->
 	str_setex(?SERVER_KEY,Tab,Time,Key,Str).
 
-str_setex(Host,Tab,Time,Key,Str) ->
+str_setex(Host,Tab,Key,Time,Str) ->
    Rpid = ejabberd_redis:get_random_pid(Host,Tab),
    do_call(Rpid, {strsetex,Key,Time,Str},Host,Tab).
 
