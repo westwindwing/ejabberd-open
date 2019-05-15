@@ -9,7 +9,6 @@ Supported Redis features:
  * Pipelining
  * Authentication & multiple dbs
  * Pubsub
- * Sentinel failover
 
 ## Example
 
@@ -24,48 +23,79 @@ copy and paste the following into a shell to try out Eredis:
     {ok, <<"OK">>} = eredis:q(C, ["SET", "foo", "bar"]).
     {ok, <<"bar">>} = eredis:q(C, ["GET", "foo"]).
 
+To connect to a Redis instance listening on a Unix domain socket:
+
+    {ok, C1} = eredis:start_link({local, "/var/run/redis.sock"}, 0).
+
 MSET and MGET:
 
-    KeyValuePairs = ["key1", "value1", "key2", "value2", "key3", "value3"].
-    {ok, <<"OK">>} = eredis:q(C, ["MSET" | KeyValuePairs]).
-    {ok, Values} = eredis:q(C, ["MGET" | ["key1", "key2", "key3"]]).
+```erlang
+KeyValuePairs = ["key1", "value1", "key2", "value2", "key3", "value3"].
+{ok, <<"OK">>} = eredis:q(C, ["MSET" | KeyValuePairs]).
+{ok, Values} = eredis:q(C, ["MGET" | ["key1", "key2", "key3"]]).
+```
+
+HASH
+
+```erlang
+HashObj = ["id", "objectId", "message", "message", "receiver", "receiver", "status", "read"].
+eredis:q(C, ["HMSET", "key" | HashObj]).
+{ok, Values} = eredis:q(C, ["HGETALL", "key"]).
+```
+
+LIST
+
+```erlang
+eredis:q(C, ["LPUSH", "keylist", "value"]).
+eredis:q(C, ["RPUSH", "keylist", "value"]).
+eredis:q(C, ["LRANGE", "keylist",0,-1]).
+```
 
 Transactions:
 
-    {ok, <<"OK">>} = eredis:q(C, ["MULTI"]).
-    {ok, <<"QUEUED">>} = eredis:q(C, ["SET", "foo", "bar"]).
-    {ok, <<"QUEUED">>} = eredis:q(C, ["SET", "bar", "baz"]).
-    {ok, [<<"OK">>, <<"OK">>]} = eredis:q(C, ["EXEC"]).
+```erlang
+{ok, <<"OK">>} = eredis:q(C, ["MULTI"]).
+{ok, <<"QUEUED">>} = eredis:q(C, ["SET", "foo", "bar"]).
+{ok, <<"QUEUED">>} = eredis:q(C, ["SET", "bar", "baz"]).
+{ok, [<<"OK">>, <<"OK">>]} = eredis:q(C, ["EXEC"]).
+```
 
 Pipelining:
 
-    P1 = [["SET", a, "1"],
-          ["LPUSH", b, "3"],
-          ["LPUSH", b, "2"]].
-    [{ok, <<"OK">>}, {ok, <<"1">>}, {ok, <<"2">>}] = eredis:qp(C, P1).
-
+```erlang
+P1 = [["SET", a, "1"],
+      ["LPUSH", b, "3"],
+      ["LPUSH", b, "2"]].
+[{ok, <<"OK">>}, {ok, <<"1">>}, {ok, <<"2">>}] = eredis:qp(C, P1).
+```
 
 Pubsub:
 
-    1> eredis_sub:sub_example().
-    received {subscribed,<<"foo">>,<0.34.0>}
-    {<0.34.0>,<0.37.0>}
-    2> eredis_sub:pub_example().
-    received {message,<<"foo">>,<<"bar">>,<0.34.0>}
+```erl
+1> eredis_sub:sub_example().
+received {subscribed,<<"foo">>,<0.34.0>}
+{<0.34.0>,<0.37.0>}
+2> eredis_sub:pub_example().
+received {message,<<"foo">>,<<"bar">>,<0.34.0>}
+```
 
 Pattern Subscribe:
-
-    1> eredis_sub:psub_example().
-    received {subscribed,<<"foo*">>,<0.33.0>}
-    {<0.33.0>,<0.36.0>}
-    2> eredis_sub:ppub_example().
-    received {pmessage,<<"foo*">>,<<"foo123">>,<<"bar">>,<0.33.0>}
-    ok
-    3>
+    
+```erl
+1> eredis_sub:psub_example(). 
+received {subscribed,<<"foo*">>,<0.33.0>}
+{<0.33.0>,<0.36.0>}
+2> eredis_sub:ppub_example().
+received {pmessage,<<"foo*">>,<<"foo123">>,<<"bar">>,<0.33.0>}
+ok
+3> 
+```
 
 EUnit tests:
 
-    ./rebar eunit
+```console
+./rebar eunit
+```
 
 
 ## Commands
@@ -88,7 +118,7 @@ To start the client, use any of the `eredis:start_link/0,1,2,3,4,5`
 functions. They all include sensible defaults. `start_link/5` takes
 the following arguments:
 
-* Host, dns name or ip adress as string
+* Host, dns name or ip adress as string; or unix domain socket as {local, Path} (available in OTP 19+)
 * Port, integer, default is 6379
 * Database, integer or 0 for default database
 * Password, string or empty string([]) for no password
@@ -110,54 +140,6 @@ stampede of clients just waiting for a failed connection attempt or
 
 Note: If Eredis is starting up and cannot connect, it will fail
 immediately with `{connection_error, Reason}`.
-
-## Redis sentinel support
-
-### Overview
-
-Starting from version 2.4.16 and 2.6.0-rc6 redis shipped with
-standart monitoring and automatic failover tool called Sentinel.
-It started as separate process that monitors redis instances and automatically
-switch to new master if the current one fails. After this all slaves are reconfigured
-to get data from new master automatically by sentinel.
-More information is here - http://redis.io/topics/sentinel
-When working with cluster that uses sentinel, clients should ask sentinel processes
-about current master instance.
-
-### Working with sentinels
-
-To enable sentinel support for eredis app:
-
-Start eredis_sentinel main process under supervisor with list of all sentinels as argument:
-
-    eredis_sentinel:start_link([{"host1.lan", 20367}, {"host2.lan", 20367}]).
-
-
-When starting eredis clients use string `sentinel:master_name` instead host:
-
-    eredis:start_link("sentinel:mymaster", 0).
-
-Port is ignored in this case, but needed as eredis:start_link/1 is a special form used in poolboy integration.
-
-`eredis_client` process will ask `eredis_sentinel` about current master for `mymaster` cluster and
-connect to it. `eredis_sentinel` also tracks all clients and in case that master changes
-it will send notifications to all interested clients.
-
-`eredis_sentinel` implements algorithm described in "Guidelines for Redis clients with
-support for Redis Sentinel":http://redis.io/topics/sentinel-clients .
-If it is unable to discover master for some cluster it return error code describing source of problem:
-
-1. `sentinel_unreachable` - couldn't connect to any of sentinels
-2. `master_unknown` - sentinels do not know about this cluster name
-3. `master_unreachable` - there are no valid master for this cluster now
-
-### Testing sentinel support
-
-`eredis_sentinel` has testing suite wich uses real redis cluster with sentinel monitoring.
-So for running these tests you should have be allowed to run `redis-server` and `redis-sentinel` executables.
-Test suite is integrated as part of common eredis eunit test suite.
-Before start it checks that `redis-server` and `redis-sentinel` is installed and prints warning if not.
-Every test case start with fresh cluster with config files from `priv/redis_*.conf` at the end of case cluster is shutted down.
 
 ## Pubsub
 
@@ -181,6 +163,10 @@ channel.
 eredis also supports Pattern Subscribe using `eredis_sub:psubscribe/2`
 and `eredis_sub:unsubscribe/2`. As with normal subscriptions, a message
 is sent to the controlling process for each channel.
+
+As of v1.0.7 the controlling process will be notified in case of
+reconnection attempts or failures. See `test/eredis_sub_tests` for
+details.
 
 ## AUTH and SELECT
 
