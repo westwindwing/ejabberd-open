@@ -17,7 +17,7 @@ do_verify_user_key(undefined, _, Req) ->
 do_verify_user_key(_, undefined, Req) ->
     http_utils:cowboy_req_reply_json(http_utils:gen_fail_result(1, <<"auth fail">>), Req);
 do_verify_user_key(User, Key, Req) when is_binary(User),is_binary(Key)->
-    case catch redis_link:hash_get(2,binary_to_list(User),binary_to_list(Key)) of
+    case catch mod_redis:hash_get(2,binary_to_list(User),binary_to_list(Key)) of
         {ok,undefined} -> http_utils:cowboy_req_reply_json(http_utils:gen_fail_result(1, <<"auth fail">>), Req);
         {ok,_ } -> http_utils:cowboy_req_reply_json(http_utils:gen_success_result(), Req);
         _ -> http_utils:cowboy_req_reply_json(http_utils:gen_fail_result(1, <<"auth fail">>), Req)

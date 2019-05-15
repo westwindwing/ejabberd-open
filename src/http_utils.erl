@@ -135,7 +135,7 @@ do_verify_user_key(_Server,undefined,_) ->
 do_verify_user_key(_Server,_,undefined) ->
 	false;
 do_verify_user_key(Server,User,Key) when is_binary(User),is_binary(Key)->
-	case catch redis_link:hash_get(Server,2,User,Key) of
+	case catch mod_redis:hash_get(2,User,Key) of
 	{ok,undefined} ->
 		false;
 	{ok,_ } ->

@@ -47,17 +47,17 @@ do_md5(S) ->
 
 set_user_mac_key(Server,User,Key) ->
     UTkey = str:concat(User,<<"_tkey">>),
-    case redis_link:redis_cmd(Server,2,["HKEYS",UTkey]) of
+    case mod_redis:redis_cmd(2,["HKEYS",UTkey]) of
     {ok,L} when is_list(L) ->
         case lists:member(Key,L) of
         true ->
             lists:foreach(fun(K) ->
-                    catch redis_link:hash_del(Server,2,UTkey,K) end,L -- [Key]);
+                    catch mod_redis:hash_del(2,UTkey,K) end,L -- [Key]);
         _ ->
             lists:foreach(fun(K) ->
-                    catch redis_link:hash_del(Server,2,UTkey,K) end,L -- [Key]),
-            catch redis_link:hash_set(Server,2,UTkey,Key,qtalk_public:get_timestamp())
+                    catch mod_redis:hash_del(2,UTkey,K) end,L -- [Key]),
+            catch mod_redis:hash_set(2,UTkey,Key,qtalk_public:get_timestamp())
         end;
     _ ->
-        catch redis_link:hash_set(Server,2,UTkey,Key,qtalk_public:get_timestamp())
+        catch mod_redis:hash_set(2,UTkey,Key,qtalk_public:get_timestamp())
     end.

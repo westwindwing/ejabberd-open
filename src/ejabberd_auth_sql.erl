@@ -508,11 +508,11 @@ check_frozen_flag() ->
 
 check_serial_number() ->
     Key = <<"qtalk_auth:serial_number">>,
-    case redis_link:str_get(15, Key) of
+    case mod_redis:str_get(15, Key) of
         {ok, undefined} ->
             SerialNum = ejabberd_config:get_option(serial, fun(Serial)-> Serial end, undefined),
             case do_check_serial_number(SerialNum) of
-                true -> redis_link:str_setex(15, Key, 10800, SerialNum), true;
+                true -> mod_redis:str_setex(15, Key, 10800, SerialNum), true;
                 false -> false
             end; 
         _ -> true

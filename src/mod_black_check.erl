@@ -37,7 +37,7 @@ do_check_packet(_FromStr, _ToStr, <<"readmark">>) ->
 do_check_packet(_FromStr, _ToStr, <<"error">>) ->
     allow;
 do_check_packet(FromStr, ToStr, _) ->
-    case redis_link:hash_get(11, <<"blacklist:", FromStr/binary>>, ToStr) of
+    case mod_redis:hash_get(11, <<"blacklist:", FromStr/binary>>, ToStr) of
         {ok, undefined} -> allow;
         _ -> deny 
     end.

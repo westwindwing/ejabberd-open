@@ -47,7 +47,7 @@ set_session(Session) ->
     Node = list_to_binary(atom_to_list(node())),
     PSession = rfc4627:encode({obj, [{"r", R}, {"n", Node}, {"f", Show}]}),
     SPSession = rfc4627:encode({obj, [{"u", U}, {"s", S}, {"r", R}, {"n", Node}, {"f", Show}]}),
-    case redis_link:qp(element(2, Session#session.us),?SESSION_REDIS_TABLE,[["HSET", USKey, SIDKey, T],
+    case mod_redis:qp(?SESSION_REDIS_TABLE,[["HSET", USKey, SIDKey, T],
 			    ["HSET", ServKey, USSIDKey, T], ["HSET", USOKey, SIDKey, PSession], ["HSET", ServOKey, USSIDKey, SPSession]]) of
 	[{ok, _}, {ok, _}, {ok, _}, {ok, _}] ->
 	    ok;
@@ -59,7 +59,7 @@ set_session(Session) ->
 			    {ok, #session{}} | {error, notfound}.
 delete_session(LUser, LServer, _LResource, SID) ->
     USKey = us_to_key({LUser, LServer}),
-    case redis_link:q(LServer,?SESSION_REDIS_TABLE,["HGETALL", USKey]) of
+    case mod_redis:q(?SESSION_REDIS_TABLE,["HGETALL", USKey]) of
 	{ok, Vals} ->
 	    Ss = decode_session_list(Vals),
 	    case lists:keyfind(SID, #session.sid, Ss) of
@@ -71,7 +71,7 @@ delete_session(LUser, LServer, _LResource, SID) ->
 		    ServKey = server_to_key(element(2, Session#session.us)),
 		    ServOKey = server_to_okey(element(2, Session#session.us)),
 		    USSIDKey = us_sid_to_key(Session#session.us, SID),
-		    redis_link:qp(LServer,?SESSION_REDIS_TABLE,[["HDEL", USKey, SIDKey],["HDEL", USOKey, SIDKey],
+		    mod_redis:qp(?SESSION_REDIS_TABLE,[["HDEL", USKey, SIDKey],["HDEL", USOKey, SIDKey],
 				       ["HDEL", ServKey, USSIDKey], ["HDEL", ServOKey, USSIDKey]]),
 		    {ok, Session}
 	    end;
@@ -90,7 +90,7 @@ get_sessions() ->
 -spec get_sessions(binary()) -> [#session{}].
 get_sessions(LServer) ->
     ServKey = server_to_key(LServer),
-    case redis_link:q(LServer,?SESSION_REDIS_TABLE,["HGETALL", ServKey]) of
+    case mod_redis:q(?SESSION_REDIS_TABLE,["HGETALL", ServKey]) of
 	{ok, Vals} ->
 	    decode_session_list(Vals);
 	Err ->
@@ -101,7 +101,7 @@ get_sessions(LServer) ->
 -spec get_sessions(binary(), binary()) -> [#session{}].
 get_sessions(LUser, LServer) ->
     USKey = us_to_key({LUser, LServer}),
-    case redis_link:q(LServer,?SESSION_REDIS_TABLE,["HGETALL", USKey]) of
+    case mod_redis:q(?SESSION_REDIS_TABLE,["HGETALL", USKey]) of
 	{ok, Vals} when is_list(Vals) ->
 	    decode_session_list(Vals);
 	Err ->
@@ -113,7 +113,7 @@ get_sessions(LUser, LServer) ->
     [#session{}].
 get_sessions(LUser, LServer, LResource) ->
     USKey = us_to_key({LUser, LServer}),
-    case redis_link:q(LServer,?SESSION_REDIS_TABLE,["HGETALL", USKey]) of
+    case mod_redis:q(?SESSION_REDIS_TABLE,["HGETALL", USKey]) of
 	{ok, Vals} when is_list(Vals) ->
 	    [S || S <- decode_session_list(Vals),
 		  element(3, S#session.usr) == LResource];
@@ -157,7 +157,7 @@ clean_table() ->
       fun(LServer) ->
 	      ServKey = server_to_key(LServer),
               ServOKey = server_to_okey(LServer),
-	      case redis_link:q(LServer,?SESSION_REDIS_TABLE,["HKEYS", ServKey]) of
+	      case mod_redis:q(?SESSION_REDIS_TABLE,["HKEYS", ServKey]) of
 		  {ok, []} ->
 		      ok;
 		  {ok, Vals} ->
@@ -190,7 +190,7 @@ clean_table() ->
 				     ["HDEL", USOKey, SIDKey]
 			     end, Vals1),
 
-                      Res = redis_link:qp(LServer,?SESSION_REDIS_TABLE,lists:delete([], [Q1|Q3])),
+                      Res = mod_redis:qp(?SESSION_REDIS_TABLE,lists:delete([], [Q1|Q3])),
                       case lists:filter(
                              fun({ok, _}) -> false;
                                 (_) -> true
@@ -201,7 +201,7 @@ clean_table() ->
                               ?ERROR_MSG("failed to clean redis table for "
                                          "server ~s: ~p", [LServer, Errs])
                       end,
-                      Res1 = redis_link:qp(LServer,?SESSION_REDIS_TABLE,lists:delete([], [Q2|Q4])),
+                      Res1 = mod_redis:qp(?SESSION_REDIS_TABLE,lists:delete([], [Q2|Q4])),
                       case lists:filter(
                              fun({ok, _}) -> false;
                                 (_) -> true
@@ -234,7 +234,7 @@ opt_type(_) ->
 
 get_vh_session_number(LServer) ->
     ServKey = server_to_key(LServer),
-    case catch  redis_link:q(LServer, ?SESSION_REDIS_TABLE,["HLEN", ServKey]) of
+    case catch  mod_redis:q( ?SESSION_REDIS_TABLE,["HLEN", ServKey]) of
     {ok, Val} when is_binary(Val) ->
         binary_to_integer(Val);
     Err ->

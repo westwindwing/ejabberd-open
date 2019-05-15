@@ -39,7 +39,7 @@ make_iq_key_reply(From) ->
     Resource = From#jid.resource,
     User = From#jid.user,
     LServer = jlib:nameprep(From#jid.server),
-    V = case redis_link:hash_get(LServer,1,User,Resource) of
+    V = case mod_redis:hash_get(1,User,Resource) of
         {ok,undefined} -> <<"">>;
         {ok,Key} -> Key;
         _ -> <<"">>

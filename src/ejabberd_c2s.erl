@@ -3374,7 +3374,7 @@ opt_type(_) ->
 %%%%%%%%%%%%%% 发送http key presence
 %%%%%%%%%%%%%%-----------------------------------------------------------
 send_time_key_presence(Server,User,Resource,StateData) ->
-    case redis_link:hash_get(Server,1,User,Resource) of
+    case mod_redis:hash_get(1,User,Resource) of
     {ok,undefined} ->
         StateData;
     {ok,Key} when Key =/= <<"">> ->

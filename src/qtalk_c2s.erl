@@ -31,10 +31,10 @@ do_check_lan_version(<<"QIM_PC">>,_Resource,_Version) ->
 %%%%%%%%%%% 设置redis用户key,用于http鉴权
 %%%%%%%%%%%-----------------------------------------------------------
 set_redis_user_key(Server, User, Resource, Key, Mac_key, _Time) ->
-    catch redis_link:hash_set(Server, 1, User, Resource, Key),
+    catch mod_redis:hash_set(1, User, Resource, Key),
     FUser = qtalk_public:concat(User, <<"@">>, Server),
-    catch redis_link:hash_set(Server, 2, FUser, Key, Mac_key),
-    catch redis_link:hash_set(Server, 2, User, Key, Mac_key).
+    catch mod_redis:hash_set(2, FUser, Key, Mac_key),
+    catch mod_redis:hash_set(2, User, Key, Mac_key).
 
 %%%%%%%%%%%-----------------------------------------------------------
 %%%%%%%%%%% @date 2017-03

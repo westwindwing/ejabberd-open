@@ -261,15 +261,15 @@ check_user_reg_muc_local(Muc,Domain,User,Host) ->
     end.
 
 clear_redis_user_key(Server,User,Resource) ->
-    case catch redis_link:hash_get(Server,1,User,Resource) of
+    case catch mod_redis:hash_get(1,User,Resource) of
     {ok,undefined} ->
                     ok;
     {ok,Key} ->
-                    redis_link:hash_del(Server,1,User,Resource),
+                    mod_redis:hash_del(1,User,Resource),
                         ?INFO_MSG("delete redis 2 key User ~p ,Key ~p ~n",[User,Key]),
     		    FUser = qtalk_public:concat(User,<<"@">>,Server),
-                    catch redis_link:hash_del(Server,2,FUser,Key),
-                    redis_link:hash_del(Server,2,User,Key);
+                    catch mod_redis:hash_del(2,FUser,Key),
+                    mod_redis:hash_del(2,User,Key);
      _ ->
                     ok
      end.
@@ -495,7 +495,7 @@ kick_error_login_user(Error,Pid) ->
 
 send_navversion(User, Server, Res, _Version) ->
     Ver = 
-    case catch redis_link:str_get(Server,15,<<"navversion">>) of
+    case catch mod_redis:str_get(15,<<"navversion">>) of
     {ok,undefined} ->
         <<"0">>;
     {ok,B} when is_binary(B)  ->
