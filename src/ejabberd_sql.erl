@@ -34,7 +34,7 @@
 -behaviour(?GEN_FSM).
 
 %% External exports
--export([start/1, start_link/2,
+-export([start_link/1,
 	 sql_query/1,
 	 sql_query/2,
 	 sql_query_t/1,
@@ -122,13 +122,9 @@
 %%%----------------------------------------------------------------------
 %%% API
 %%%----------------------------------------------------------------------
-start(Host) ->
-    (?GEN_FSM):start(ejabberd_sql, [Host],
-		     fsm_limit_opts() ++ (?FSMOPTS)).
-
-start_link(Host, StartInterval) ->
+start_link(Opts) ->
     (?GEN_FSM):start_link(ejabberd_sql,
-			  [Host, StartInterval],
+			  [Opts],
 			  fsm_limit_opts() ++ (?FSMOPTS)).
 
 -type sql_query() :: [sql_query() | binary()] | #sql_query{} |
@@ -180,22 +176,12 @@ sql_call(Host, Msg) ->
 sql_call_use_module(Msg,Module) -> sql_call_use_module(?SERVER_KEY, Msg,Module).
 
 sql_call_use_module(_, Msg,Module) ->
-    Host = ?SERVER_KEY,
     case get(?STATE_KEY) of
       undefined ->
-        case Module:get_random_pid(Host) of
-          none -> {error, <<"Unknown Host">>};
-          Pid ->
-            case erlang:process_info(Pid,message_queue_len) of
-            {message_queue_len,N} when is_integer(N) andalso N > 10000 ->
-                ?INFO_MSG("sql queueu to long...Msg is ~p ~n",[Msg]),
-                {error, <<"too_many">>};  
-            _ ->
-                (?GEN_FSM):sync_send_event(Pid,{sql_cmd, Msg,
-                                                p1_time_compat:monotonic_time(milli_seconds)},
-                                           ?TRANSACTION_TIMEOUT)
-            end
-          end;
+          Fun = fun(Pid) ->
+              (?GEN_FSM):sync_send_event(Pid,{sql_cmd, Msg, p1_time_compat:monotonic_time(milli_seconds)}, ?TRANSACTION_TIMEOUT)
+          end,
+          Module:sql_call(Fun);
       _State -> nested_op(Msg)
     end.
 
@@ -287,7 +273,10 @@ sqlite_file(Host) ->
 %%%----------------------------------------------------------------------
 %%% Callback functions from gen_fsm
 %%%----------------------------------------------------------------------
-init([Host, StartInterval]) ->
+init([Opts]) ->
+    Host = ?SERVER_KEY,
+    DBType = pgsql,
+    StartInterval = gen_mod:get_opt(sql_start_interval, Opts, fun(A) -> A end, 30),
     case ejabberd_config:get_option(
            {sql_keepalive_interval, Host},
            fun(I) when is_integer(I), I>0 -> I end) of
@@ -297,9 +286,7 @@ init([Host, StartInterval]) ->
             timer:apply_interval(KeepaliveInterval * 1000, ?MODULE,
                                  keep_alive, [self()])
     end,
-    [DBType | _] = db_opts(Host),
     (?GEN_FSM):send_event(self(), connect),
-    ejabberd_sql_sup:add_pid(Host, self()),
     {ok, connecting,
      #state{db_type = DBType, host = Host,
 	    max_pending_requests_len = max_fsm_queue(),

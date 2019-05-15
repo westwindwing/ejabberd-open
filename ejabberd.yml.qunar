@@ -342,6 +342,11 @@ sql_database: "ejabberd"
 sql_username: "ejabberd"
 sql_password: "123456"
 
+pg_size_args:
+  size: 10
+  max_overflow: 20
+pg_worker_args:
+    sql_start_interval: 30
 ##
 ## If you want to specify the port:
 ## sql_port: 1234
