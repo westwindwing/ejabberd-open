@@ -576,7 +576,7 @@ start_new_room(Host, ServerHost, Access, Room,
 	    Nick, DefRoomOpts) ->
     case restore_room(ServerHost, Host, Room) of
 	error ->
-	    ?ERROR_MSG("MUC: open new room '~p'~n", [{ServerHost, Host, Room}]),
+	    ?INFO_MSG("MUC: open new room '~p'~n", [{ServerHost, Host, Room}]),
 	    mod_muc_room:start(Host, ServerHost, Access, Room,
 		HistorySize, RoomShaper,
 		From, Nick, DefRoomOpts);
