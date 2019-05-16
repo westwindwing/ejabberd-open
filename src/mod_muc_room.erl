@@ -123,7 +123,8 @@ init([Host, ServerHost, Access, Room, HistorySize,
     ?INFO_MSG("Created MUC room ~s@~s by ~s",
 	      [Room, Host, jid:to_string(Creator)]),
 
-    {ok, normal_state, NewState};
+    TRef = start_timer(),
+    {ok, normal_state, NewState#state{tref = TRef}};
 init([Host, ServerHost, Access, Room, HistorySize, RoomShaper, Opts]) ->
     process_flag(trap_exit, true),
     Shaper = shaper:new(RoomShaper),
@@ -138,14 +139,17 @@ init([Host, ServerHost, Access, Room, HistorySize, RoomShaper, Opts]) ->
     qtalk_muc:init_ets_muc_users(ServerHost,Room,Host),
     NewState = invite_all_register_user(State),    
 
-    {ok, normal_state, NewState}.
+    TRef = start_timer(),
+    {ok, normal_state, NewState#state{tref = TRef}}.
 
 normal_state({route, From, <<"">>,
 	      #xmlel{name = <<"message">>, attrs = Attrs,
 		     children = Els} =
 		  Packet},
-	     StateData) ->
+	     StateData = #state{tref = TRef}) ->
+    NewTRef = restart_timer(TRef),
     Lang = fxml:get_attr_s(<<"xml:lang">>, Attrs),
+    {KeyNew, ReasonNew, StateNew} =
     case is_user_online_with_no_resource(From, StateData) orelse
 	is_subscriber(From, StateData) orelse
 	is_user_allowed_message_nonparticipant(From, StateData)
@@ -393,10 +397,13 @@ normal_state({route, From, <<"">>,
 						       StateData, From)
 	  end,
 	  {next_state, normal_state, StateData}
-    end;
+    end,
+    {KeyNew, ReasonNew, StateNew#state{tref = NewTRef}};
 normal_state({route, From, <<"">>,
 	      #xmlel{name = <<"iq">>} = Packet},
-	     StateData) ->
+	     StateData = #state{tref = TRef}) ->
+    NewTRef = restart_timer(TRef),
+    {KeyNew, ReasonNew, StateNew} =
     case jlib:iq_query_info(Packet) of
 	reply ->
 	    {next_state, normal_state, StateData};
@@ -503,10 +510,12 @@ normal_state({route, From, <<"">>,
 		    ejabberd_router:route(StateData#state.jid, From, Err),
 		    {next_state, normal_state, StateData}
 	    end
-    end;
+    end,
+    {KeyNew, ReasonNew, StateNew#state{tref = NewTRef}};
 normal_state({route, From, Nick,
 	      #xmlel{name = <<"presence">>} = Packet},
-	     StateData) ->
+	     StateData = #state{tref = TRef}) ->
+    NewTRef = restart_timer(TRef),
     Activity = get_user_activity(From, StateData),
     Now = p1_time_compat:system_time(micro_seconds),
     MinPresenceInterval =
@@ -516,6 +525,7 @@ normal_state({route, From, Nick,
                                              I
                                      end, 0)
               * 1000000),
+    {KeyNew, ReasonNew, StateNew} =
     if (Now >=
 	  Activity#activity.presence_time + MinPresenceInterval)
 	 and (Activity#activity.presence == undefined) ->
@@ -538,12 +548,15 @@ normal_state({route, From, Nick,
 	   StateData1 = store_user_activity(From, NewActivity,
 					    StateData),
 	   {next_state, normal_state, StateData1}
-    end;
+    end,
+    {KeyNew, ReasonNew, StateNew#state{tref = NewTRef}};
 normal_state({route, From, ToNick,
 	      #xmlel{name = <<"message">>, attrs = Attrs} = Packet},
-	     StateData) ->
+	     StateData = #state{tref = TRef}) ->
+    NewTRef = restart_timer(TRef),
     Type = fxml:get_attr_s(<<"type">>, Attrs),
     Lang = fxml:get_attr_s(<<"xml:lang">>, Attrs),
+    {KeyNew, ReasonNew, StateNew} =
     case decide_fate_message(Type, Packet, From, StateData)
 	of
       {expulse_sender, Reason} ->
@@ -630,10 +643,12 @@ normal_state({route, From, ToNick,
 			     From, Err)
 	  end,
 	  {next_state, normal_state, StateData}
-    end;
+    end,
+    {KeyNew, ReasonNew, StateNew#state{tref = NewTRef}};
 normal_state({route, From, ToNick,
 	      #xmlel{name = <<"iq">>, attrs = Attrs} = Packet},
-	     StateData) ->
+	     StateData = #state{tref = TRef}) ->
+    NewTRef = restart_timer(TRef),
     Lang = fxml:get_attr_s(<<"xml:lang">>, Attrs),
     StanzaId = fxml:get_attr_s(<<"id">>, Attrs),
     case {(StateData#state.config)#config.allow_query_users,
@@ -690,7 +705,7 @@ normal_state({route, From, ToNick,
 			     From, Err)
 	  end
     end,
-    {next_state, normal_state, StateData};
+    {next_state, normal_state, StateData#state{tref = NewTRef}};
 normal_state(_Event, StateData) ->
     {next_state, normal_state, StateData}.
 
@@ -872,7 +887,8 @@ handle_sync_event(_Event, _From, StateName,
     Reply = ok, {reply, Reply, StateName, StateData}.
 
 code_change(_OldVsn, StateName, StateData, _Extra) ->
-    {ok, StateName, StateData}.
+    TRef = start_timer(),
+    {ok, StateName, StateData#state{tref = TRef}}.
 
 handle_info({process_user_presence, From}, normal_state = _StateName, StateData) ->
     RoomQueueEmpty = queue:is_empty(StateData#state.room_queue),
@@ -5413,7 +5429,7 @@ process_iq_invtie_v2(From,set,_Lang,SubEl,StateData) ->
 handle_iq_invite_res({result,Result ,State,Num},RUsers,_StateData) ->
     case Num > RUsers  andalso RUsers < 9 of
     true ->
-        spawn(make_muc_pic,make_muc_pic,[State#state.server_host,State#state.room,State#state.host]),
+        make_muc_pic:make_muc_pic(State#state.server_host,State#state.room,State#state.host, Num, RUsers),
         {result,Result ,State};
     _ ->
         {result,Result ,State}
@@ -5726,7 +5742,7 @@ handle_xmlns_presence(From, _SubEl, Type, XMLNS, StateData) ->
         _ -> ok
     end.
 
-check_Attrs_JID(User,Domain,Attrs,StateData) ->
+check_Attrs_JID(User,Domain,Attrs, _StateData) ->
     case fxml:get_attr(<<"role">>, Attrs) of
         false ->
             case fxml:get_attr(<<"affiliation">>, Attrs) of
@@ -5746,8 +5762,6 @@ check_Attrs_JID(User,Domain,Attrs,StateData) ->
             case jlib:make_jid(User,Domain,<<"">>) of
             error -> {error, ?ERR_NOT_ALLOWED};
             JID ->
-                %catch qtalk_muc:del_muc_room_users(StateData#state.server_host,StateData#state.room,StateData#state.host,User,Domain),
-                %catch send_muc_del_registed_presence(JID,StateData),
                 {value, [JID]}
             end;
         _ -> {error, ?ERR_NOT_ALLOWED}
@@ -5833,3 +5847,16 @@ do_send_push_message(Time,Nick, FromJID, Packet, StateData, PushUrl) ->
                                        {"realfrom", RealFrom},
                                        {"userlist", UL}]}),
     http_client:http_post(binary_to_list(PushUrl), [{"connection", "close"}], "application/json", MsgContent, [], []).
+
+
+cancel_timer(undefined) ->
+    ok;
+cancel_timer(TRef) ->
+    erlang:cancel_timer(TRef).
+
+start_timer() ->
+    erlang:send_after(3600000, self(), shutdown).
+
+restart_timer(TRef) ->
+    cancel_timer(TRef),
+    start_timer().

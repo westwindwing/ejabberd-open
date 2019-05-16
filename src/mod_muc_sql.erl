@@ -33,6 +33,7 @@ store_room(LServer, Host, Name, Opts) ->
     case catch ejabberd_sql:sql_query(LServer,
         [<<"insert into muc_room(name,host,opts) values ('">>,Name,<<"','">>,Host,<<"','">>,SOpts,<<"');">>]) of
     {updated,1} ->
+            catch ejabberd_sql:sql_query(LServer, [<<"insert into muc_vcard_info(muc_name, show_name, muc_desc, muc_pic, version) values ('">>,Name, <<"@">>,Host, <<"','新建群组', '欢迎加入', '/file/v2/download/eb574c5a1d33c72ba14fc1616cde3a42.png', '1');"/utf8>>]),
             ok;
     _ ->
         catch  ejabberd_sql:sql_query(LServer,
