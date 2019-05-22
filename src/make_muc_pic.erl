@@ -9,14 +9,9 @@
 
 %% (<<"ejabhost1">>,<<"c31652d67b2643a582906e0b5dc27f1d">>,<<"conference.ejabhost1">>,7,6)
 make_muc_pic(Server,Muc,Domain, Num, RNum) ->
-    ?DEBUG("the make_muc_pic params is ~p~n", [{Server,Muc,Domain, Num, RNum}]),
-    Pic1 = <<"/file/v2/download/eb574c5a1d33c72ba14fc1616cde3a42.png">>,
-    Pic2 = <<"/file/v2/download/eb574c5a1d33c72ba14fc1616cde3a42.png">>,
-    Pic3 = <<"/file/v2/download/eb574c5a1d33c72ba14fc1616cde3a42.png">>,
-    Pic = if Num > 100, RNum < 100 -> Pic3;
-             Num > 20, RNum < 20 -> Pic2;
-             true -> Pic1
-    end,
+    Pics = ejabberd_config:get_option(muc_pics, fun(Ps)-> Ps end, [<<"/file/v2/download/5645fc02eac20176c8a3569d83f3ff7a.png">>]),
+    Pic = lists:nth(random:uniform(length(Pics)), Pics),
+    ?INFO_MSG("the pics is ~p, the pic is ~p~n", [Pics, Pic]),
 
     catch ejabberd_sql:sql_query(Server, [<<"update muc_vcard_info set muc_pic = '">>, Pic, <<"', version = version + 1 where muc_name = '">>, qtalk_public:concat(Muc,<<"@">>,Domain), <<"';">>]),
 
