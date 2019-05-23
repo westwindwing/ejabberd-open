@@ -1268,6 +1268,7 @@ CREATE TABLE public.muc_vcard_info (
     muc_desc text,
     muc_title text,
     muc_pic text DEFAULT '/file/v2/download/eb574c5a1d33c72ba14fc1616cde3a42.png'::text,
+    show_name_pinyin varchar(1000) DEFAULT 'xinjianqunliao|xjql',
     version integer DEFAULT 1
 );
 
