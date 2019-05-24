@@ -382,8 +382,9 @@ ALTER SEQUENCE public.destroy_muc_info_id_seq OWNED BY public.destroy_muc_info.i
 --
 
 CREATE TABLE public.flogin_user (
-    username text NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
+      id serial primary key, 
+      username varchar(1000) not null,
+      create_time timestamptz not null default now()
 );
 
 
