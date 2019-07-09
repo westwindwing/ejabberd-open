@@ -34,7 +34,11 @@ do_del_muc_users(Server,Args) ->
     Domain = http_muc_session:get_value("muc_domain",Args,<<"">>),
     Muc_Towner = http_muc_session:get_value("muc_true_owner",Args,Muc_owner),
     Owner = jlib:jid_to_string({Muc_Towner,Host,<<"">>}),
-    case mod_muc:check_muc_owner(Server,Muc_id,Owner) of
+    % add by hqlin 去除群所有者校验逻辑
+    ?DEBUG("do_del_muc_users start: muc_id: -s ,muc_owner: -s,muc_owner_host: -s,muc_member: -s,muc_domain: -s,Owner: -s",
+      [Muc_id,Muc_owner,Host,Muc_member,Domain,Owner]),
+    % case mod_muc:check_muc_owner(Server,Muc_id,Owner) of
+    case mod_muc:check_muc_owner() of
     true ->
         case jlib:make_jid(Muc_id,Domain,<<"">>) of
         error -> ok;

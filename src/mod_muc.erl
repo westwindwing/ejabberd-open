@@ -56,7 +56,7 @@
 	 handle_info/2, terminate/2, code_change/3,
 	 mod_opt_type/1, depends/2]).
 
--export([check_muc_owner/3,handle_recreate_muc/7,recreate_muc_room/6,recreate_muc_room/7,handle_recreate_muc/6]).
+-export([check_muc_owner/3,check_muc_owner/0,handle_recreate_muc/7,recreate_muc_room/6,recreate_muc_room/7,handle_recreate_muc/6]).
 
 -include("ejabberd.hrl").
 -include("logger.hrl").
@@ -1007,6 +1007,10 @@ handle_recreate_muc(Server, Muc, Host, From, Nick, Packet, Flag) ->
         {_, false} -> ok;
         {_, true} -> mod_muc_room:route(P, From, Nick, Packet)
     end.
+
+% add by hqlin 添加无群所有者校验逻辑
+check_muc_owner() ->
+  true.
 
 check_muc_owner(LServer,Muc,User) ->
     Host = str:concat(<<"conference.">>,LServer),

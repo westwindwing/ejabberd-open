@@ -2,7 +2,7 @@
 
 -export([start_link/1]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
-                        terminate/2,code_change/3]).
+                        terminate/2,code_change/3,socket_type/0]).
 
 -export([start/2]).
 -export([stop/1]).
@@ -50,6 +50,10 @@ start(_Type, Args) ->
     {ok,_} = cowboy:start_http(http, 200, [{port,Http_port}], [
         {env, [{dispatch, Dispatch},{max_connections, infinity}]}
     ]).
+
+% 添加socket_type方法，不然无法作为独立服务模块启动
+socket_type() ->
+  raw.
 
 stop(_State) ->
     ok.
